@@ -13,12 +13,12 @@
 
 bool XFEventQueuePort::empty() const
 {
-
+    return _queue.isEmpty();
 }
 
 bool XFEventQueuePort::push(const XFEvent *pEvent)
 {
-
+    _queue.enqueue(pEvent);
 }
 
 const XFEvent *XFEventQueuePort::front()
