@@ -1,0 +1,5 @@
+<map id="evRestart" name="evRestart">
+<area shape="rect" id="node2" href="E:/svn/225_PTR/Labs_Rim/04-XF/03-release/work/src/xf/doxygen/xf.tag$class_x_f_custom_event.html" title="{XFCustomEvent\n|# _bDeleteAfterConsume\l|+ XFCustomEvent()\l+ deleteAfterConsume()\l# setDeleteAfterConsume()\l}" alt="" coords="5,492,184,599"/>
+<area shape="rect" id="node3" href="E:/svn/225_PTR/Labs_Rim/04-XF/03-release/work/src/xf/doxygen/xf.tag$class_x_f_event.html" title="{XFEvent\n|+ Unknown\l+ Initial\l+ NullTransition\l+ Event\l+ Timeout\l+ Terminate\l# _eventType\l# _id\l|+ XFEvent()\l+ ~XFEvent()\l+ getEventType()\l+ getBehavior()\l+ setBehavior()\l+ getId()\l+ deleteAfterConsume()\l}" alt="" coords="15,175,175,443"/>
+<area shape="rect" id="node4" href="E:/svn/225_PTR/Labs_Rim/04-XF/03-release/work/src/xf/doxygen/xf.tag$classinterface_1_1_x_f_reactive.html" title="{interface::XFReactive\n||+ startBehavior()\l+ pushEvent()\l# process()\l}" alt="" coords="22,5,167,112"/>
+</map>

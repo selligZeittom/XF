@@ -1,0 +1,8 @@
+<map id="XFResourceFactoryDefault" name="XFResourceFactoryDefault">
+<area shape="rect" id="node2" href="$classinterface_1_1_x_f_resource_factory.html" title="Responsible to create and return XF resources. " alt="" coords="5,580,197,745"/>
+<area shape="rect" id="node3" href="$class_x_f_dispatcher_default.html" title="A dispatcher implementation which can be used without an OS. " alt="" coords="221,536,389,789"/>
+<area shape="rect" id="node4" href="$classinterface_1_1_x_f_dispatcher.html" title="Interface for the XF dispatcher providing the event processing loop. " alt="" coords="59,220,216,473"/>
+<area shape="rect" id="node5" href="$classinterface_1_1_x_f_mutex.html" title="Mutex interface needed by the XF to access a mutex. " alt="" coords="240,279,371,415"/>
+<area shape="rect" id="node6" href="$class_x_f_event_queue_default.html" title="Default implementation of the event queue using a std::queue as container. " alt="" coords="395,264,571,429"/>
+<area shape="rect" id="node7" href="$classinterface_1_1_x_f_event_queue.html" title="Interface to be implemented by the event queue. " alt="" coords="400,5,565,171"/>
+</map>

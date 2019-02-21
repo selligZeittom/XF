@@ -1,0 +1,6 @@
+<map id="XFDispatcherDefault" name="XFDispatcherDefault">
+<area shape="rect" id="node2" href="$classinterface_1_1_x_f_dispatcher.html" title="Interface for the XF dispatcher providing the event processing loop. " alt="" coords="5,220,163,473"/>
+<area shape="rect" id="node3" href="$classinterface_1_1_x_f_mutex.html" title="Mutex interface needed by the XF to access a mutex. " alt="" coords="187,279,317,415"/>
+<area shape="rect" id="node4" href="$class_x_f_event_queue_default.html" title="Default implementation of the event queue using a std::queue as container. " alt="" coords="341,264,517,429"/>
+<area shape="rect" id="node5" href="$classinterface_1_1_x_f_event_queue.html" title="Interface to be implemented by the event queue. " alt="" coords="347,5,512,171"/>
+</map>

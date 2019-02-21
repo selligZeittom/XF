@@ -1,0 +1,5 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$classinterface_1_1_x_f_event_queue.html" title="Interface to be implemented by the event queue. " alt="" coords="5,31,171,57"/>
+<area shape="rect" id="node2" href="$class_x_f_event_queue_default.html" title="Default implementation of the event queue using a std::queue as container. " alt="" coords="219,5,364,32"/>
+<area shape="rect" id="node3" href="$class_x_f_event_queue_port.html" title="XFEventQueuePort implementation for the IDF Qt port. " alt="" coords="227,56,355,83"/>
+</map>

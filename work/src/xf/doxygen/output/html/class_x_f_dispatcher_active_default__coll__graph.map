@@ -1,0 +1,8 @@
+<map id="XFDispatcherActiveDefault" name="XFDispatcherActiveDefault">
+<area shape="rect" id="node2" href="$classinterface_1_1_x_f_thread_entry_point_provider.html" title="Interface to be implemented by the class providing the thread entry method. " alt="" coords="5,293,219,400"/>
+<area shape="rect" id="node3" href="$classinterface_1_1_x_f_dispatcher.html" title="Interface for the XF dispatcher providing the event processing loop. " alt="" coords="243,220,400,473"/>
+<area shape="rect" id="node4" href="$classinterface_1_1_x_f_thread.html" title="Interface for a Thread. " alt="" coords="424,257,563,437"/>
+<area shape="rect" id="node5" href="$class_x_f_event_queue_port.html" title="XFEventQueuePort implementation for the IDF Qt port. " alt="" coords="587,249,746,444"/>
+<area shape="rect" id="node6" href="$classinterface_1_1_x_f_event_queue.html" title="Interface to be implemented by the event queue. " alt="" coords="584,5,749,171"/>
+<area shape="rect" id="node7" href="$classinterface_1_1_x_f_mutex.html" title="Mutex interface needed by the XF to access a mutex. " alt="" coords="771,279,901,415"/>
+</map>

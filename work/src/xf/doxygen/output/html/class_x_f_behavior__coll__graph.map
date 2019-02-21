@@ -1,0 +1,5 @@
+<map id="XFBehavior" name="XFBehavior">
+<area shape="rect" id="node2" href="$classinterface_1_1_x_f_reactive.html" title="Interface to receive and process events. " alt="" coords="5,5,151,141"/>
+<area shape="rect" id="node3" href="$class_x_f_event.html" title="Base class for all types of events and timeouts. " alt="" coords="75,241,235,421"/>
+<area shape="rect" id="node4" href="$classinterface_1_1_x_f_dispatcher.html" title="Interface for the XF dispatcher providing the event processing loop. " alt="" coords="259,204,417,457"/>
+</map>

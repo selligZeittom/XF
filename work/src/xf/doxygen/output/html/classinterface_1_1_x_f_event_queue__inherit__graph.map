@@ -1,0 +1,4 @@
+<map id="interface::XFEventQueue" name="interface::XFEventQueue">
+<area shape="rect" id="node2" href="$class_x_f_event_queue_default.html" title="Default implementation of the event queue using a std::queue as container. " alt="" coords="5,233,181,399"/>
+<area shape="rect" id="node3" href="$class_x_f_event_queue_port.html" title="XFEventQueuePort implementation for the IDF Qt port. " alt="" coords="206,219,365,413"/>
+</map>
