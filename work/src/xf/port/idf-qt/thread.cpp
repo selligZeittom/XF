@@ -17,4 +17,39 @@
 
 // TODO: Implement code for XFThreadPort class
 
+void XFThreadPort::start()
+{
+
+}
+
+void XFThreadPort::suspend()
+{
+
+}
+
+void XFThreadPort::stop()
+{
+
+}
+
+void XFThreadPort::setPriority(XFThreadPriority priority)
+{
+
+}
+
+XFThreadPriority XFThreadPort::getPriority() const
+{
+
+}
+
+void XFThreadPort::delay(uint32_t milliseconds)
+{
+
+}
+
+void XFThreadPort::run()
+{
+
+}
+
 #endif // USE_XF_PORT_IDF_QT_THREAD_IMPLEMENTATION
