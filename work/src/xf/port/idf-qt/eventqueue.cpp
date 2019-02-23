@@ -9,7 +9,10 @@
 
 // TODO: Implement code for XFEventQueuePort class
 
-#endif // USE_XF_PORT_IDF_QT_EVENT_QUEUE_IMPLEMENTATION
+XFEventQueuePort::~XFEventQueuePort()
+{
+
+}
 
 bool XFEventQueuePort::empty() const
 {
@@ -50,3 +53,5 @@ bool XFEventQueuePort::pend()
     while(_queue.isEmpty()){}; //wait for an event (it is blocking)
     return true; //return true once an event came
 }
+
+#endif // USE_XF_PORT_IDF_QT_EVENT_QUEUE_IMPLEMENTATION
