@@ -73,7 +73,26 @@ void XFTimeoutManagerDefault::scheduleTimeout(int32_t timeoutId, int32_t interva
 
 void XFTimeoutManagerDefault::unscheduleTimeout(int32_t timeoutId, interface::XFReactive *pReactive)
 {
+    //create an iterator at the beginning of the list
+    TimeoutList::iterator it = _timeouts.begin();
 
+    //create a timeout with the parameters just to use the operator ==
+    XFTimeout tm(timeoutId, 0, pReactive); //interval is not compared later
+
+    //iterate over the already existing timeouts until the good place is found
+    for (; it != _timeouts.end(); ++it)
+    {
+        //break if it's the interval is already smaller than the sum
+        if((*it) == tm)
+        {
+            if((*it) =! NULL)
+            {
+                delete (*it); //delete this timeout ptr
+            }
+            _timeouts.erase(it); //then erase it from the list
+            break;
+        }
+    }
 }
 
 void XFTimeoutManagerDefault::tick()
