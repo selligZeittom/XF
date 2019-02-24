@@ -48,13 +48,13 @@ void XFTimeoutManagerDefault::scheduleTimeout(int32_t timeoutId, int32_t interva
     for (; it != _timeouts.end(); ++it)
     {
         //break if it's the interval is already smaller than the sum
-        if(interval < remainingTicksSum + it->_relTicks)
+        if(interval < remainingTicksSum + (*it)->getRelTicks())
         {
             break;
         }
 
         //increment the remainingTicksSum
-        remainingTicksSum += it->_relTicks;
+        remainingTicksSum += (*it)->getRelTicks();
     }
 
     //insert before that iterator
@@ -67,7 +67,7 @@ void XFTimeoutManagerDefault::scheduleTimeout(int32_t timeoutId, int32_t interva
     for (; it != _timeouts.end(); ++it)
     {
         //cut the number of ticks counted by the inserted timeout
-        it->_relTicks -= remainingTicksSum;
+        (*it)->setRelTicks((*it)->getRelTicks()- remainingTicksSum);
     }
 }
 
