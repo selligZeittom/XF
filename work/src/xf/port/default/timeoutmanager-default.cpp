@@ -73,8 +73,10 @@ void XFTimeoutManagerDefault::scheduleTimeout(int32_t timeoutId, int32_t interva
 
 void XFTimeoutManagerDefault::unscheduleTimeout(int32_t timeoutId, interface::XFReactive *pReactive)
 {
-    //create an iterator at the beginning of the list
+    //create an iterator at the beginning of the list and one to continue
     TimeoutList::iterator it = _timeouts.begin();
+    TimeoutList::iterator it2 = it;
+    int relTicksTmErased = 0;
 
     //create a timeout with the parameters just to use the operator ==
     XFTimeout tm(timeoutId, 0, pReactive); //interval is not compared later
@@ -83,15 +85,28 @@ void XFTimeoutManagerDefault::unscheduleTimeout(int32_t timeoutId, interface::XF
     for (; it != _timeouts.end(); ++it)
     {
         //break if it's the interval is already smaller than the sum
-        if((*it) == tm)
+        if(*(*it) == tm)
         {
-            if((*it) =! NULL)
+            //first save the next iterator to adapt the relativ ticks
+            it2 = it + 1;
+
+            //then save the relatives ticks that are remaining
+            relTicksTmErased = (*it)->getRelTicks();
+
+            if((*it) != NULL)
             {
                 delete (*it); //delete this timeout ptr
             }
             _timeouts.erase(it); //then erase it from the list
             break;
         }
+    }
+
+    //adapt relatives ticks
+    for(;it2 != _timeouts.end(); it2++)
+    {
+        //add the number of ticks erased
+        (*it2)->setRelTicks((*it2)->getRelTicks()- relTicksTmErased);
     }
 }
 
