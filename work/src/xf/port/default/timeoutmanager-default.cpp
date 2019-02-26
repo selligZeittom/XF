@@ -20,7 +20,13 @@ interface::XFTimeoutManager * interface::XFTimeoutManager::getInstance()
 
 interface::XFTimeoutManager *XFTimeoutManagerDefault::getInstance()
 {
+    XFTimeoutManager* theTimeoutManager = NULL;
+   if(!theTimeoutManager)
+   {
+       theTimeoutManager = new XFTimeoutManager();
+   }
 
+   return theTimeoutManager;
 }
 
 XFTimeoutManagerDefault::~XFTimeoutManagerDefault()
