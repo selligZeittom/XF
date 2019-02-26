@@ -18,4 +18,11 @@ using interface::XFResourceFactory;
 
 // TODO: Implement code for XFDispatcherActive class
 
+
+int XFDispatcherActiveDefault::executeOnce()
+{
+
+}
+
+
 #endif // USE_XF_DISPATCHER_ACTIVE_DEFAULT_IMPLEMENTATION

@@ -8,6 +8,7 @@
 #include "xf/interface/resourcefactory.h"
 #include "port-functions.h"
 #include "timeoutmanager-default.h"
+#include "trace/trace.h"
 
 using interface::XFResourceFactory;
 
@@ -20,23 +21,23 @@ interface::XFTimeoutManager * interface::XFTimeoutManager::getInstance()
 
 interface::XFTimeoutManager *XFTimeoutManagerDefault::getInstance()
 {
-    XFTimeoutManager* theTimeoutManager = NULL;
-   if(!theTimeoutManager)
-   {
-       theTimeoutManager = new XFTimeoutManager();
-   }
+    interface::XFTimeoutManager* theTimeoutManager = NULL;
+    if(!theTimeoutManager)
+    {
+        theTimeoutManager = new XFTimeoutManager();
+    }
 
-   return theTimeoutManager;
+    return theTimeoutManager;
 }
 
 XFTimeoutManagerDefault::~XFTimeoutManagerDefault()
 {
-
+    Trace::out("[timeoutmanager-default.cpp] ~XFTimeoutManagerDefault() TBI");
 }
 
 void XFTimeoutManagerDefault::start()
 {
-
+    Trace::out("[timeoutmanager-default.cpp] ~start() TBI");
 }
 
 void XFTimeoutManagerDefault::scheduleTimeout(int32_t timeoutId, int32_t interval, interface::XFReactive *pReactive)
@@ -118,27 +119,27 @@ void XFTimeoutManagerDefault::unscheduleTimeout(int32_t timeoutId, interface::XF
 
 void XFTimeoutManagerDefault::tick()
 {
-
+    Trace::out("[timeoutmanager-default.cpp] ~XFTimeoutManagerDefault()) TBI");
 }
 
 XFTimeoutManagerDefault::XFTimeoutManagerDefault()
 {
-
+    Trace::out("[timeoutmanager-default.cpp] ~XFTimeoutManagerDefault()) TBI");
 }
 
 void XFTimeoutManagerDefault::addTimeout(XFTimeout *pNewTimeout)
 {
-
+    Trace::out("[timeoutmanager-default.cpp] addTimeout()) TBI");
 }
 
 void XFTimeoutManagerDefault::removeTimeouts(int32_t timeoutId, interface::XFReactive *pReactive)
 {
-
+    Trace::out("[timeoutmanager-default.cpp] removeTimeouts() TBI");
 }
 
 void XFTimeoutManagerDefault::returnTimeout(XFTimeout *pTimeout)
 {
-
+    Trace::out("[timeoutmanager-default.cpp] returnTimeout() TBI");
 }
 
 #endif // USE_XF_TIMEOUTMANAGER_DEFAULT_IMPLEMENTATION
