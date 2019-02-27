@@ -23,7 +23,7 @@ interface::XFResourceFactory *XFResourceFactoryPort::getInstance()
     static XFResourceFactoryPort* theResourceFactoryPort = NULL;
     if(!theResourceFactoryPort)
     {
-        theResourceFactoryPort = new XFResourceFactory();
+        theResourceFactoryPort = new XFResourceFactoryPort();
     }
     return theResourceFactoryPort;
 }
@@ -41,7 +41,7 @@ interface::XFDispatcher *XFResourceFactoryPort::getDefaultDispatcher()
 
 interface::XFDispatcher *XFResourceFactoryPort::createDispatcher()
 {
-    interface::XFDispatcher* newDispatcher = new interface::XFDispatcher();
+    XFDispatcherActiveDefault* newDispatcher = new XFDispatcherActiveDefault();
 }
 
 interface::XFThread *XFResourceFactoryPort::createThread(interface::XFThreadEntryPointProvider *pProvider, interface::XFThread::EntryMethodBody entryMethod, const char *threadName, const uint32_t stackSize)

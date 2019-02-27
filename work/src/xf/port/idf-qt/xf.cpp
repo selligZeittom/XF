@@ -14,11 +14,10 @@ using interface::XFResourceFactory;
 
 // TODO: Implement code for XF class
 
-#endif // USE_XF_PORT_IDF_QT_XF_IMPLEMENTATION
 
 void XF::initialize(int timeInterval, int argc, char *argv[])
 {
-    Trace::out("[xf.cpp] initialize()  : " + arc + ", " + argv);
+    Trace::out("[xf.cpp] initialize()");
 
 }
 
@@ -35,13 +34,13 @@ int XF::exec()
 int XF::execOnce()
 {
     //execute only one time the dispatcher
-    XFResourceFactory::getDefaultDispatcher()->executeOnce();
+    getDefaultDispatcher()->executeOnce();
 }
 
 interface::XFDispatcher *XF::getDefaultDispatcher()
 {
     //the one and only one dispatcher
-    return XFResourceFactory::getDefaultDispatcher();
+    return getDefaultDispatcher();
 }
 
 
@@ -63,3 +62,5 @@ void XF_execOnce()
 {
     XF::execOnce();
 }
+
+#endif // USE_XF_PORT_IDF_QT_XF_IMPLEMENTATION

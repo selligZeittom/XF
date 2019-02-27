@@ -21,10 +21,10 @@ interface::XFTimeoutManager * interface::XFTimeoutManager::getInstance()
 
 interface::XFTimeoutManager *XFTimeoutManagerDefault::getInstance()
 {
-    interface::XFTimeoutManager* theTimeoutManager = NULL;
+    XFTimeoutManagerDefault* theTimeoutManager = NULL;
     if(!theTimeoutManager)
     {
-        theTimeoutManager = new XFTimeoutManager();
+        theTimeoutManager = new XFTimeoutManagerDefault();
     }
 
     return theTimeoutManager;
@@ -51,10 +51,10 @@ void XFTimeoutManagerDefault::scheduleTimeout(int32_t timeoutId, int32_t interva
     //store the total of remaining ticks of some timeouts
     int remainingTicksSum = 0;
 
-    //iterate over the already existing timeouts until the good place is found
+    //iterate over the already existing timeouts until the right position is found
     for (; it != _timeouts.end(); ++it)
     {
-        //break if it's the interval is already smaller than the sum
+        //break if the sum is already bigger than the interval
         if(interval < remainingTicksSum + (*it)->getRelTicks())
         {
             break;
@@ -80,46 +80,51 @@ void XFTimeoutManagerDefault::scheduleTimeout(int32_t timeoutId, int32_t interva
 
 void XFTimeoutManagerDefault::unscheduleTimeout(int32_t timeoutId, interface::XFReactive *pReactive)
 {
-    //create an iterator at the beginning of the list and one to continue
-    TimeoutList::iterator it = _timeouts.begin();
-    TimeoutList::iterator it2 = it;
-    int relTicksTmErased = 0;
+    int relTicksTmErased = 0;       //number of ticks deleted, must be added to the following timeouts in the list
+    bool hasBeenFound = false;      //true once the wanted timeout has been found and deleted from the list
 
     //create a timeout with the parameters just to use the operator ==
-    XFTimeout tm(timeoutId, 0, pReactive); //interval is not compared later
+    XFTimeout toDeleteTm(timeoutId, 0, pReactive); //interval is not compared with ==
 
-    //iterate over the already existing timeouts until the good place is found
-    for (; it != _timeouts.end(); ++it)
+    //iterate over the already existing timeouts until the right timeout is found
+    for (XFTimeout* tm : _timeouts)
     {
-        //break if it's the interval is already smaller than the sum
-        if(*(*it) == tm)
+        if(*tm == toDeleteTm && !hasBeenFound)
         {
-            //first save the next iterator to adapt the relativ ticks
-            it2 = it + 1;
+            //first save the relatives ticks that are remaining
+            relTicksTmErased = tm->getRelTicks();
 
-            //then save the relatives ticks that are remaining
-            relTicksTmErased = (*it)->getRelTicks();
+            _timeouts.remove(tm); //then remove it from the list
 
-            if((*it) != NULL)
+            if(tm != NULL)
             {
-                delete (*it); //delete this timeout ptr
+                delete tm; //delete this timeout ptr
             }
-            _timeouts.erase(it); //then erase it from the list
-            break;
+            continue; //goto next iteration
         }
-    }
 
-    //adapt relatives ticks
-    for(;it2 != _timeouts.end(); it2++)
-    {
-        //add the number of ticks erased
-        (*it2)->setRelTicks((*it2)->getRelTicks()- relTicksTmErased);
+        //after it has been found, adjust the relTicks
+        if(hasBeenFound)
+        {
+            tm->setRelTicks(tm->getRelTicks() + relTicksTmErased);
+        }
     }
 }
 
 void XFTimeoutManagerDefault::tick()
 {
-    Trace::out("[timeoutmanager-default.cpp] ~XFTimeoutManagerDefault()) TBI");
+    Trace::out("[timeoutmanager-default.cpp] tick()");
+
+    //get the first element of the list
+    XFTimeout* tm = _timeouts.front();
+
+    //decrement it
+    tm->substractFromRelTicks(1);
+
+    if(tm->getRelTicks() == 0)
+    {
+
+    }
 }
 
 XFTimeoutManagerDefault::XFTimeoutManagerDefault()
