@@ -4,7 +4,7 @@
 
 #include <assert.h>
 #if (XF_TRACE_EVENT_PUSH_POP != 0)
-    #include "trace/trace.h"
+#include "trace/trace.h"
 #endif // XF_TRACE_EVENT_PUSH_POP
 #include "xf/eventstatus.h"
 #include "xf/interface/timeoutmanager.h"
@@ -18,71 +18,109 @@
 using interface::XFTimeoutManager;
 using interface::XFResourceFactory;
 
-// TODO: Implement code for XFDispatcherActive class
-
-
-XFDispatcherActiveDefault::XFDispatcherActiveDefault()
+XFDispatcherActiveDefault::XFDispatcherActiveDefault() :
+    _bInitialized(false),
+    _bExecuting(false),
+    _pThread(nullptr),
+    _pMutex(nullptr)
 {
-    Trace::out("[dispatcher-active.cpp] XFDispatcherActiveDefault() TBI");
+    // Create Thread
+    _pThread = XFResourceFactory::getInstance()->createThread(this,
+                                                              (interface::XFThread::EntryMethodBody)&XFDispatcherActiveDefault::execute,
+                                                              "dispatcherThread");
 }
 
 XFDispatcherActiveDefault::~XFDispatcherActiveDefault()
 {
-    Trace::out("[dispatcher-active.cpp] ~XFDispatcherActiveDefault() TBI");
+    _bExecuting = false;
+    _pThread->stop();
 }
 
 void XFDispatcherActiveDefault::initialize()
 {
-    Trace::out("[dispatcher-active.cpp] initialize() TBI");
-
+    if (!_bInitialized)
+    {
+        _bInitialized = true;
+        _pMutex = XFResourceFactory::getInstance()->createMutex();
+        assert(_pMutex);
+    }
 }
 
 void XFDispatcherActiveDefault::start()
 {
-    Trace::out("[dispatcher-active.cpp] start() TBI");
-
+    assert(_pThread);
+    assert(_pMutex);        // Call initialize() first
+    _bExecuting = true;
+    _pThread->start();
 }
 
 void XFDispatcherActiveDefault::stop()
 {
-    Trace::out("[dispatcher-active.cpp] stop() TBI");
-
+    _bExecuting = false;
+    _pThread->suspend();
 }
 
-void XFDispatcherActiveDefault::pushEvent(XFEvent *pEvent)
+void XFDispatcherActiveDefault::pushEvent(XFEvent * pEvent)
 {
-    Trace::out("[dispatcher-active.cpp] pushEvent() TBI");
+    if (!_bInitialized)
+    {
+        initialize();
+    }
 
+    _pMutex->lock();
+    {
+#if (XF_TRACE_EVENT_PUSH_POP != 0)
+        Trace::out("Push event: 0x%x", pEvent);
+#endif // XF_TRACE_EVENT_PUSH_POP
+        _events.push(pEvent);
+    }
+    _pMutex->unlock();
 }
 
-void XFDispatcherActiveDefault::scheduleTimeout(int timeoutId, int interval, interface::XFReactive *pReactive)
+void XFDispatcherActiveDefault::scheduleTimeout(int timeoutId, int interval, interface::XFReactive * pReactive)
 {
-    Trace::out("[dispatcher-active.cpp] scheduleTimeout() TBI");
-
+    // Forward timeout to the timeout manager
+    XFTimeoutManager::getInstance()->scheduleTimeout(timeoutId, interval, pReactive);
 }
 
-void XFDispatcherActiveDefault::unscheduleTimeout(int timeoutId, interface::XFReactive *pReactive)
+void XFDispatcherActiveDefault::unscheduleTimeout(int timeoutId, interface::XFReactive * pReactive)
 {
-    Trace::out("[dispatcher-active.cpp] initialize() TBI");
+    // Forward timeout to the timeout manager
+    XFTimeoutManager::getInstance()->unscheduleTimeout(timeoutId, pReactive);
+}
 
+int XFDispatcherActiveDefault::execute(const void * param /* = nullptr */)
+{
+    (void)param;
+
+    while(_bExecuting)
+    {
+        while (_events.empty() && _bExecuting)
+        {
+            _events.pend();	// Wait until something to do
+        }
+
+        executeOnce();
+    }
+
+    return 0;
 }
 
 int XFDispatcherActiveDefault::executeOnce()
 {
-    Trace::out("[dispatcher-active.cpp] executeOnce() TBI");
-
+    if(!_events.empty() && _bExecuting)
+    {
+        //get an event and send it to the dispatch method
+        dispatchEvent(_events.front());
+    }
+    return _bExecuting;
 }
 
-int XFDispatcherActiveDefault::execute(const void *param)
+void XFDispatcherActiveDefault::dispatchEvent(const XFEvent * pEvent) const
 {
-    Trace::out("[dispatcher-active.cpp] execute() TBI");
-
-}
-
-void XFDispatcherActiveDefault::dispatchEvent(const XFEvent *pEvent) const
-{
-    Trace::out("[dispatcher-active.cpp] dispatchEvent() TBI");
-
+    //get the target and send it !
+    interface::XFReactive* target = pEvent->getBehavior();
+    target->pushEvent(const_cast<XFEvent*>(pEvent));
 }
 
 

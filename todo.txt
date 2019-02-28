@@ -1,3 +1,3 @@
 destroy the dynamically created timeout in the method schedule, should be done after being processed
-used a variable for the tick_interval into the method tick() of the timeout manager
+____________used a variable for the tick_interval into the method tick() of the timeout manager
 deleteAfterConsume of the events : check if it should be true or not

@@ -6,7 +6,6 @@
 #include <assert.h>
 #include "xf/interface/reactive.h"
 #include "xf/interface/resourcefactory.h"
-#include "idf-qt/resourcefactory.h"
 #include "port-functions.h"
 #include "timeoutmanager-default.h"
 #include "trace/trace.h"
@@ -66,7 +65,7 @@ void XFTimeoutManagerDefault::tick()
     XFTimeout* tm = _timeouts.front();
 
     //decrement it
-    tm->substractFromRelTicks(1);
+    tm->substractFromRelTicks(_tickInterval);
 
     if(tm->getRelTicks() == 0)
     {

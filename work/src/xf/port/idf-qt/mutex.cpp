@@ -7,6 +7,11 @@
 
 // TODO: Implement code for XFXFMutexPort class
 
+XFMutexPort::XFMutexPort()
+{
+
+}
+
 XFMutexPort::~XFMutexPort()
 {
 

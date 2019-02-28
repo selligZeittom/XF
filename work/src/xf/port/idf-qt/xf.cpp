@@ -11,8 +11,7 @@
 
 
 using interface::XFResourceFactory;
-
-// TODO: Implement code for XF class
+bool XF::_bInitialized;
 
 
 void XF::initialize(int timeInterval, int argc, char *argv[])
@@ -20,7 +19,7 @@ void XF::initialize(int timeInterval, int argc, char *argv[])
     Trace::out("[xf.cpp] initialize()");
     if(!_bInitialized)
     {
-
+        interface::XFTimeoutManager::getInstance()->initialize(timeInterval);
     }
     _bInitialized = true;
 }
@@ -32,7 +31,6 @@ int XF::exec()
     {
         execOnce();
     }
-
 }
 
 int XF::execOnce()
@@ -44,7 +42,7 @@ int XF::execOnce()
 interface::XFDispatcher *XF::getDefaultDispatcher()
 {
     //the one and only one dispatcher
-    return XFResourceFactory::getDefaultDispatcher();
+    return XFResourceFactory::getInstance()->getDefaultDispatcher();
 }
 
 

@@ -31,14 +31,17 @@ XFBehavior::~XFBehavior()
 
 void XFBehavior::startBehavior()
 {
-    Trace::out("[behavior.cpp] startBehavior() TBI");
+    Trace::out("[behavior.cpp] startBehavior()");
+    _pDispatcher->pushEvent(new XFInitialEvent());
 
 }
 
 void XFBehavior::pushEvent(XFEvent *pEvent)
 {
     Trace::out("[behavior.cpp] pushEvent()");
-    _pDispatcher->pushEvent(pEvent);
+    //_pDispatcher->pushEvent(pEvent);
+    process(pEvent);
+
 }
 
 const XFEvent *XFBehavior::getCurrentEvent() const
@@ -56,6 +59,10 @@ interface::XFDispatcher *XFBehavior::getDispatcher()
 const XFTimeout *XFBehavior::getCurrentTimeout()
 {
     Trace::out("[behavior.cpp] XFBehavior() TBI");
+    if(_pCurrentEvent->getEventType() == XFEvent::XFEventType::Timeout)
+    {
+        return (XFTimeout*) _pCurrentEvent;
+    }
     return NULL;
 }
 

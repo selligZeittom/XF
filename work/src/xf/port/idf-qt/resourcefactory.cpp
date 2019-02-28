@@ -46,12 +46,15 @@ interface::XFDispatcher *XFResourceFactoryPort::createDispatcher()
 
 interface::XFThread *XFResourceFactoryPort::createThread(interface::XFThreadEntryPointProvider *pProvider, interface::XFThread::EntryMethodBody entryMethod, const char *threadName, const uint32_t stackSize)
 {
-    Trace::out("[resourcecfactory.cpp] createThread() TBI");
+    Trace::out("[resourcecfactory.cpp] createThread()");
+    XFThreadPort* newThread = new XFThreadPort(pProvider, entryMethod, threadName, stackSize);
+    return newThread;
 }
 
 interface::XFMutex *XFResourceFactoryPort::createMutex()
 {
-    Trace::out("[resourcecfactory.cpp] createMutex() TBI");
+    Trace::out("[resourcecfactory.cpp] createMutex()");
+    return new XFMutexPort();
 }
 
 #endif // USE_XF_PORT_IDF_QT_RESOURCE_FACTORY_IMPLEMENTATION
