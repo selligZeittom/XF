@@ -18,7 +18,11 @@ using interface::XFResourceFactory;
 void XF::initialize(int timeInterval, int argc, char *argv[])
 {
     Trace::out("[xf.cpp] initialize()");
+    if(!_bInitialized)
+    {
 
+    }
+    _bInitialized = true;
 }
 
 int XF::exec()
@@ -40,7 +44,7 @@ int XF::execOnce()
 interface::XFDispatcher *XF::getDefaultDispatcher()
 {
     //the one and only one dispatcher
-    return getDefaultDispatcher();
+    return XFResourceFactory::getDefaultDispatcher();
 }
 
 

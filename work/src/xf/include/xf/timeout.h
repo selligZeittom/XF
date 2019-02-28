@@ -48,6 +48,7 @@ public:
 
     inline void setRelTicks(int relTicks) { _relTicks = relTicks; }                                 ///< Sets remaining ticks.
     inline int getRelTicks() const { return _relTicks; }                                            ///< Returns remaining ticks.
+    inline int getInterval() const { return _interval; }                                            ///< Returns interval
     inline void substractFromRelTicks(int ticksToSubstract) { _relTicks -= ticksToSubstract; }      ///< Substracts `ticksToSubstract` from remaining ticks.
     inline void addToRelTicks(int ticksToAdd) { _relTicks += ticksToAdd; }                          ///< Adds `ticksToAdd` to remaining ticks.
 

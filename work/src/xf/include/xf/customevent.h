@@ -35,14 +35,13 @@ public:
      * @brief Tells the XF if the event should be deleted after processing.
      * @return True if the event should be deleted.
      */
-	bool deleteAfterConsume() const override { return _bDeleteAfterConsume; }
-
+    bool deleteAfterConsume() const override { return _bDeleteAfterConsume; }
 protected:
     /**
      * @brief Setter for #_bDeleteAfterConsume attribute.
      * @param bDeleteAfterConsume Parameter to be assigned. Default: true.
      */
-	void setDeleteAfterConsume(bool bDeleteAfterConsume = true) { _bDeleteAfterConsume = bDeleteAfterConsume; }
+    void setDeleteAfterConsume(bool bDeleteAfterConsume = true);
 
 protected:
     bool _bDeleteAfterConsume;          ///< True if the XF should delete event after consumption/dispatching.

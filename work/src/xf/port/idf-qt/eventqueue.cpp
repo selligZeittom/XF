@@ -9,6 +9,11 @@
 
 // TODO: Implement code for XFEventQueuePort class
 
+XFEventQueuePort::XFEventQueuePort()
+{
+
+}
+
 XFEventQueuePort::~XFEventQueuePort()
 {
 
