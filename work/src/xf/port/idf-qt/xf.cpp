@@ -20,12 +20,18 @@ void XF::initialize(int timeInterval, int argc, char *argv[])
     if(!_bInitialized)
     {
         interface::XFTimeoutManager::getInstance()->initialize(timeInterval);
+        XFResourceFactory.getInstance()->getDefaultDispatcher()->initialize();
+
     }
     _bInitialized = true;
 }
 
 int XF::exec()
 {
+    if(_bInitialized)
+    {
+        initialize(1);
+    }
     //main loop for event dispatching, this is blocking
     while(true)
     {
