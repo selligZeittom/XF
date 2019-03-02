@@ -31,7 +31,7 @@ XFBehavior::~XFBehavior()
 
 void XFBehavior::startBehavior()
 {
-    Trace::out("[behavior.cpp] startBehavior()");
+    Trace::out("[behavior.cpp] startBehavior() : init event pushed");
     _pDispatcher->pushEvent(new XFInitialEvent());
 
 }

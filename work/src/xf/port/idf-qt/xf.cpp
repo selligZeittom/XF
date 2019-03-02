@@ -20,7 +20,11 @@ void XF::initialize(int timeInterval, int argc, char *argv[])
     if(!_bInitialized)
     {
         interface::XFTimeoutManager::getInstance()->initialize(timeInterval);
-        XFResourceFactory.getInstance()->getDefaultDispatcher()->initialize();
+        XFResourceFactory::getInstance()->getDefaultDispatcher()->initialize();
+        Trace::out("[xf.cpp] timeout manager, dispatcher and xf initialized ");
+        XFResourceFactory::getInstance()->getDefaultDispatcher()->start();
+        interface::XFTimeoutManager::getInstance()->start();
+        Trace::out("[xf.cpp] timeout manager, dispatcher and xf started ");
 
     }
     _bInitialized = true;

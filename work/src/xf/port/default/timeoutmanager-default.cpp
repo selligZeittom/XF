@@ -38,10 +38,9 @@ XFTimeoutManagerDefault::~XFTimeoutManagerDefault()
 void XFTimeoutManagerDefault::start()
 {
     Trace::out("[timeoutmanager-default.cpp] ~start()");
-    XFResourceFactory.getInstance()->createThread(XFResourceFactory.getInstance()->getDefaultDispatcher(),
-                                                  (interface::XFThread::EntryMethodBody)&XF_startTimeoutManagerTimer(_tickInterval),
-                                                  "timer");
-
+    XFResourceFactory::getInstance()->createThread(XFResourceFactory::getInstance()->getDefaultDispatcher(),
+                                                   (interface::XFThread::EntryMethodBody) &XF_startTimeoutManagerTimer(_tickInterval),
+                                                   "timer");
 }
 
 void XFTimeoutManagerDefault::scheduleTimeout(int32_t timeoutId, int32_t interval, interface::XFReactive *pReactive)
