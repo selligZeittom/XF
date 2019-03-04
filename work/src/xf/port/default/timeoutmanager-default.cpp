@@ -25,22 +25,25 @@ interface::XFTimeoutManager *XFTimeoutManagerDefault::getInstance()
     if(!theTimeoutManager)
     {
         theTimeoutManager = new XFTimeoutManagerDefault();
+        Trace::out("[timeoutmanager-default.cpp] new timeoutmanager created");
     }
-
     return theTimeoutManager;
 }
 
 XFTimeoutManagerDefault::~XFTimeoutManagerDefault()
 {
-    Trace::out("[timeoutmanager-default.cpp] ~XFTimeoutManagerDefault() TBI");
+    Trace::out("[timeoutmanager-default.cpp] ~XFTimeoutManagerDefault() destructor TBI");
 }
 
 void XFTimeoutManagerDefault::start()
 {
-    Trace::out("[timeoutmanager-default.cpp] ~start()");
+    Trace::out("[timeoutmanager-default.cpp] start()");
+    /*
     XFResourceFactory::getInstance()->createThread(XFResourceFactory::getInstance()->getDefaultDispatcher(),
                                                    (interface::XFThread::EntryMethodBody) &XF_startTimeoutManagerTimer(_tickInterval),
                                                    "timer");
+                                                   */
+    XF_startTimeoutManagerTimer(_tickInterval);
 }
 
 void XFTimeoutManagerDefault::scheduleTimeout(int32_t timeoutId, int32_t interval, interface::XFReactive *pReactive)
@@ -81,7 +84,7 @@ void XFTimeoutManagerDefault::tick()
 
 XFTimeoutManagerDefault::XFTimeoutManagerDefault()
 {
-    Trace::out("[timeoutmanager-default.cpp] ~XFTimeoutManagerDefault()) TBI");
+    Trace::out("[timeoutmanager-default.cpp] XFTimeoutManagerDefault()) TBI");
 }
 
 void XFTimeoutManagerDefault::addTimeout(XFTimeout *pNewTimeout)

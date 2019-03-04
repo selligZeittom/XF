@@ -24,6 +24,7 @@ interface::XFResourceFactory *XFResourceFactoryPort::getInstance()
     if(!theResourceFactoryPort)
     {
         theResourceFactoryPort = new XFResourceFactoryPort();
+        Trace::out("[resourcecfactory.cpp] created the resourcefactoryport");
     }
     return theResourceFactoryPort;
 }

@@ -2,7 +2,6 @@
 
 #if (USE_XF_PORT_IDF_QT_XF_IMPLEMENTATION != 0)
 
-#include <QCoreApplication>
 #include "xf/interface/timeoutmanager.h"
 #include "xf/interface/resourcefactory.h"
 #include "xf/interface/dispatcher.h"
@@ -13,17 +12,20 @@
 using interface::XFResourceFactory;
 bool XF::_bInitialized;
 
+QCoreApplication* XF::_app;
+
 
 void XF::initialize(int timeInterval, int argc, char *argv[])
 {
+    XF::_app = new QCoreApplication(argc, argv);
     Trace::out("[xf.cpp] initialize()");
     if(!_bInitialized)
     {
         interface::XFTimeoutManager::getInstance()->initialize(timeInterval);
         XFResourceFactory::getInstance()->getDefaultDispatcher()->initialize();
         Trace::out("[xf.cpp] timeout manager, dispatcher and xf initialized ");
-        XFResourceFactory::getInstance()->getDefaultDispatcher()->start();
         interface::XFTimeoutManager::getInstance()->start();
+        XFResourceFactory::getInstance()->getDefaultDispatcher()->start();
         Trace::out("[xf.cpp] timeout manager, dispatcher and xf started ");
 
     }
@@ -34,18 +36,18 @@ int XF::exec()
 {
     if(_bInitialized)
     {
+        Trace::out("[xf.cpp] exec calls initialize, should not happen");
         initialize(1);
     }
+
     //main loop for event dispatching, this is blocking
-    while(true)
-    {
-        execOnce();
-    }
+    _app->exec();
 }
 
 int XF::execOnce()
 {
     //execute only one time the dispatcher
+    Trace::out("[xf.cpp] execOnce()");
     getDefaultDispatcher()->executeOnce();
 }
 
