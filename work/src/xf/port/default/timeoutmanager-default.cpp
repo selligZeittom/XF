@@ -66,7 +66,7 @@ void XFTimeoutManagerDefault::tick()
         //decrement it
         tm->substractFromRelTicks(_tickInterval);
 
-        if(tm->getRelTicks() == 0)
+        if(tm->getRelTicks() <= 0)
         {
             _timeouts.pop_front(); //remove it from the list
 
@@ -105,8 +105,10 @@ void XFTimeoutManagerDefault::addTimeout(XFTimeout *pNewTimeout)
         remainingTicksSum += (*it)->getRelTicks();
     }
 
+    int newRelTicks = pNewTimeout->getInterval() - remainingTicksSum;
+
     //set the relative ticks for the inserted timeout
-    pNewTimeout->setRelTicks(pNewTimeout->getInterval() - remainingTicksSum);
+    pNewTimeout->setRelTicks(newRelTicks);
 
     //insert before that iterator
     _timeouts.insert(it, pNewTimeout);
@@ -115,7 +117,7 @@ void XFTimeoutManagerDefault::addTimeout(XFTimeout *pNewTimeout)
     for (; it != _timeouts.end(); ++it)
     {
         //substract the added
-        (*it)->addToRelTicks(remainingTicksSum);
+        (*it)->substractFromRelTicks(newRelTicks);
     }
     _pMutex->unlock();
 }
@@ -149,7 +151,7 @@ void XFTimeoutManagerDefault::removeTimeouts(int32_t timeoutId, interface::XFRea
         //after it has been found, adjust the relTicks
         if(hasBeenFound)
         {
-            tm->setRelTicks(tm->getRelTicks() + relTicksTmErased);
+            tm->addToRelTicks(relTicksTmErased);
         }
     }
     _pMutex->unlock();

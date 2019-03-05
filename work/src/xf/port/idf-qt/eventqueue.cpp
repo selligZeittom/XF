@@ -6,6 +6,7 @@
 #include <QtGlobal>
 #include <QMutexLocker>
 #include "eventqueue.h"
+#include "trace/trace.h"
 
 // TODO: Implement code for XFEventQueuePort class
 
@@ -26,33 +27,36 @@ bool XFEventQueuePort::empty() const
 
 bool XFEventQueuePort::push(const XFEvent *pEvent)
 {
+    //bool emptyBeforeEnqueue = _queue.empty();
+    _mutex.lock();
     _queue.enqueue(pEvent);
-    _newEvents.wakeAll();
+    _mutex.unlock();
+
+    //if(emptyBeforeEnqueue)
+    //{
+        _newEvents.wakeAll();
+    //}
     return true;
 }
 
 const XFEvent *XFEventQueuePort::front()
 {
-    //_mutex.lock(); //make sure that only one thread can access to that CS
     if(!_queue.isEmpty()) //check wether it is empty or not
     {
-        return _queue.head(); //return the pointer on the first event
+        _queue.dequeue();
     }
     else
     {
         return NULL; //return NULL if the queue is empty
     }
-    //_mutex.unlock();
 }
 
 void XFEventQueuePort::pop()
 {
-    //_mutex.lock(); //make sure that only one thread can access to that CS
     if(!_queue.isEmpty()) //check wether it is empty or not
     {
         _queue.pop_front(); //remove the next event of the list
     }
-    //_mutex.unlock();
 }
 
 bool XFEventQueuePort::pend()
@@ -60,6 +64,7 @@ bool XFEventQueuePort::pend()
     _mutex.lock();
     _newEvents.wait(&_mutex);
     _mutex.unlock();
+
     return true; //return true once an event came
 }
 

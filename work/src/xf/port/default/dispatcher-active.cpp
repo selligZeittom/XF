@@ -113,7 +113,6 @@ int XFDispatcherActiveDefault::executeOnce()
     {
         //get an event and send it to the dispatch method
         dispatchEvent(_events.front());
-        _events.pop(); //remove event from list
     }
     return _bExecuting;
 }
