@@ -17,26 +17,35 @@ interface::XFTimeoutManager * interface::XFTimeoutManager::getInstance()
     return XFTimeoutManagerDefault::getInstance();
 }
 
-// TODO: Implement code for XFTimeoutManagerDefault class
-
 interface::XFTimeoutManager *XFTimeoutManagerDefault::getInstance()
 {
     static XFTimeoutManagerDefault* theTimeoutManager = NULL;
-    if(!theTimeoutManager)
+    if(!theTimeoutManager) //create the singleton
     {
         theTimeoutManager = new XFTimeoutManagerDefault();
-        Trace::out("[timeoutmanager-default.cpp] new timeoutmanager created");
     }
     return theTimeoutManager;
 }
 
 XFTimeoutManagerDefault::~XFTimeoutManagerDefault()
 {
-    Trace::out("[timeoutmanager-default.cpp] ~XFTimeoutManagerDefault() destructor TBI");
+    //delete the singleton
+    if(getInstance())
+    {
+        delete getInstance();
+    }
+
+    //delete the mutex
+    if(_pMutex)
+    {
+        delete _pMutex;
+        _pMutex = NULL;
+    }
 }
 
 void XFTimeoutManagerDefault::start()
 {
+    //this will launch the qtimer
     XF_startTimeoutManagerTimer(_tickInterval);
 }
 
@@ -50,17 +59,16 @@ void XFTimeoutManagerDefault::scheduleTimeout(int32_t timeoutId, int32_t interva
 
 void XFTimeoutManagerDefault::unscheduleTimeout(int32_t timeoutId, interface::XFReactive *pReactive)
 {
-    //Trace::out("[timeoutmanager-default.cpp] unscheduleTimeout()");
-
     removeTimeouts(timeoutId, pReactive); //call the protected method
 }
 
 void XFTimeoutManagerDefault::tick()
 {
-    //get the reference of the first element of the list
     _pMutex->lock();
+
     if(_timeouts.size() > 0)
     {
+        //get the reference of the first element of the list
         XFTimeout* tm = _timeouts.front();
 
         //decrement it

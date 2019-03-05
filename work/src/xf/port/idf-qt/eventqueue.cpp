@@ -12,30 +12,28 @@
 
 XFEventQueuePort::XFEventQueuePort()
 {
-
 }
 
 XFEventQueuePort::~XFEventQueuePort()
 {
-
 }
 
 bool XFEventQueuePort::empty() const
 {
-    return _queue.isEmpty();
+    return _queue.isEmpty(); //return wether the queue is empty or not
 }
 
 bool XFEventQueuePort::push(const XFEvent *pEvent)
 {
-    //bool emptyBeforeEnqueue = _queue.empty();
+    bool emptyBeforeEnqueue = _queue.empty(); //save state before enqueuing
     _mutex.lock();
     _queue.enqueue(pEvent);
     _mutex.unlock();
 
-    //if(emptyBeforeEnqueue)
-    //{
-        _newEvents.wakeAll();
-    //}
+    if(emptyBeforeEnqueue)
+    {
+        _newEvents.wakeAll(); //wake up the pend()
+    }
     return true;
 }
 
@@ -62,7 +60,7 @@ void XFEventQueuePort::pop()
 bool XFEventQueuePort::pend()
 {
     _mutex.lock();
-    _newEvents.wait(&_mutex);
+    _newEvents.wait(&_mutex); //wait for a signal
     _mutex.unlock();
 
     return true; //return true once an event came

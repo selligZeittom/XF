@@ -12,5 +12,5 @@ XFNullTransition::~XFNullTransition()
 
 bool XFNullTransition::deleteAfterConsume() const
 {
-    return false;
+    return true;
 }

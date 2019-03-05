@@ -18,8 +18,7 @@
 
 void XFThreadPort::start()
 {
-    QThread::start();
-    //run();
+    QThread::start(); //function of qthread
 }
 
 void XFThreadPort::suspend()

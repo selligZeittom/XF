@@ -1,7 +1,9 @@
 destroy the dynamically created timeout in the method schedule, should be done after being processed
 
-____________used a variable for the tick_interval into the method tick() of the timeout manager
+deleteAfterConsume of the events : check if it should be true or no
 
-deleteAfterConsume of the events : check if it should be true or not
 
-qwaitconditions
+delete event after process -> maybe intp the dispatcher ?
+
+
+no option to delete the resourcefactoryport alloc and same into xf???? (no destructor)

@@ -18,22 +18,21 @@ QCoreApplication* XF::_app;
 void XF::initialize(int timeInterval, int argc, char *argv[])
 {
     XF::_app = new QCoreApplication(argc, argv);
-    Trace::out("[xf.cpp] initialize()");
-    if(!_bInitialized)
+
+    if(!_bInitialized) //initialize what should be initialized
     {
         interface::XFTimeoutManager::getInstance()->initialize(timeInterval);
         XFResourceFactory::getInstance()->getDefaultDispatcher()->initialize();
-        Trace::out("[xf.cpp] timeout manager, dispatcher and xf initialized ");
-
     }
     _bInitialized = true;
 }
 
 int XF::exec()
 {
+    //start the dispatcher and the timeout manager
     XFResourceFactory::getInstance()->getDefaultDispatcher()->start();
     interface::XFTimeoutManager::getInstance()->start();
-    _app->exec();
+    _app->exec(); //keep the main thread aliiiive
 }
 
 int XF::execOnce()

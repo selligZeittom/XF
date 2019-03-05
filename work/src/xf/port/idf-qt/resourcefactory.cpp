@@ -16,15 +16,12 @@ interface::XFResourceFactory * interface::XFResourceFactory::getInstance()
     return XFResourceFactoryPort::getInstance();
 }
 
-// TODO: Implement code for XFResourceFactoryPort class
-
 interface::XFResourceFactory *XFResourceFactoryPort::getInstance()
 {
     static XFResourceFactoryPort* theResourceFactoryPort = NULL;
-    if(!theResourceFactoryPort)
+    if(!theResourceFactoryPort) //create the singleton if needed
     {
         theResourceFactoryPort = new XFResourceFactoryPort();
-        Trace::out("[resourcecfactory.cpp] new resourcefactoryport created");
     }
     return theResourceFactoryPort;
 }
@@ -32,7 +29,7 @@ interface::XFResourceFactory *XFResourceFactoryPort::getInstance()
 interface::XFDispatcher *XFResourceFactoryPort::getDefaultDispatcher()
 {
     static interface::XFDispatcher* defaultDispatcher = NULL;
-    if(!defaultDispatcher)
+    if(!defaultDispatcher) //create the default dispatcher
     {
         defaultDispatcher = createDispatcher();
     }
@@ -43,21 +40,18 @@ interface::XFDispatcher *XFResourceFactoryPort::getDefaultDispatcher()
 interface::XFDispatcher *XFResourceFactoryPort::createDispatcher()
 {
     XFDispatcherActiveDefault* newDispatcher = new XFDispatcherActiveDefault();
-    Trace::out("[resourcecfactory.cpp] new Dispatcher created()");
     return newDispatcher;
 
 }
 
 interface::XFThread *XFResourceFactoryPort::createThread(interface::XFThreadEntryPointProvider *pProvider, interface::XFThread::EntryMethodBody entryMethod, const char *threadName, const uint32_t stackSize)
 {
-    Trace::out("[resourcecfactory.cpp] createThread()");
     XFThreadPort* newThread = new XFThreadPort(pProvider, entryMethod, threadName, stackSize);
     return newThread;
 }
 
 interface::XFMutex *XFResourceFactoryPort::createMutex()
 {
-    Trace::out("[resourcecfactory.cpp] createMutex()");
     return new XFMutexPort();
 }
 

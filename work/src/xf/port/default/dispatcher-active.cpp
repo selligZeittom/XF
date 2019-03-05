@@ -12,7 +12,6 @@
 #include "xf/interface/thread.h"
 #include "xf/interface/resourcefactory.h"
 #include "dispatcher-active.h"
-//#include "trace/trace.h"
 
 
 using interface::XFTimeoutManager;
@@ -34,6 +33,11 @@ XFDispatcherActiveDefault::~XFDispatcherActiveDefault()
 {
     _bExecuting = false;
     _pThread->stop();
+    if(_pThread)
+    {
+        delete _pThread;
+        _pThread = NULL;
+    }
 }
 
 void XFDispatcherActiveDefault::initialize()
