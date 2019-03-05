@@ -17,7 +17,6 @@ XFBehavior::XFBehavior(interface::XFDispatcher *pDispatcher)
     {
         _pDispatcher = XFResourceFactory::getInstance()->getDefaultDispatcher();
     }
-
 }
 
 XFBehavior::XFBehavior(bool ownDispatcher)
