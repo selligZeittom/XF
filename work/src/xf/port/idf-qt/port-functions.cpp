@@ -6,6 +6,8 @@
 #include <QObject>
 #include <QTimerEvent>
 #include "port-functions.h"
+#include "trace/trace.h"
+
 
 class TimeoutManagerTimer : public QObject
 {
@@ -19,12 +21,14 @@ public:
     {
         Q_ASSERT(_timerId == 0);	// Method should be called only once!
         _timerId = startTimer(tickInterval, Qt::PreciseTimer);
+        Trace::out("[port-functions.cpp] started the qtimer");
     }
 
     virtual void timerEvent(QTimerEvent * event)
     {
         if (event->timerId() == _timerId)
         {
+            //Trace::out("[port-functions.cpp] tick");
             interface::XFTimeoutManager::getInstance()->tick();
         }
     }

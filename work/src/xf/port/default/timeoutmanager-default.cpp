@@ -21,7 +21,7 @@ interface::XFTimeoutManager * interface::XFTimeoutManager::getInstance()
 
 interface::XFTimeoutManager *XFTimeoutManagerDefault::getInstance()
 {
-    XFTimeoutManagerDefault* theTimeoutManager = NULL;
+    static XFTimeoutManagerDefault* theTimeoutManager = NULL;
     if(!theTimeoutManager)
     {
         theTimeoutManager = new XFTimeoutManagerDefault();
@@ -38,11 +38,6 @@ XFTimeoutManagerDefault::~XFTimeoutManagerDefault()
 void XFTimeoutManagerDefault::start()
 {
     Trace::out("[timeoutmanager-default.cpp] start()");
-    /*
-    XFResourceFactory::getInstance()->createThread(XFResourceFactory::getInstance()->getDefaultDispatcher(),
-                                                   (interface::XFThread::EntryMethodBody) &XF_startTimeoutManagerTimer(_tickInterval),
-                                                   "timer");
-                                                   */
     XF_startTimeoutManagerTimer(_tickInterval);
 }
 
@@ -65,20 +60,23 @@ void XFTimeoutManagerDefault::unscheduleTimeout(int32_t timeoutId, interface::XF
 
 void XFTimeoutManagerDefault::tick()
 {
-    Trace::out("[timeoutmanager-default.cpp] tick()");
+    //Trace::out("[timeoutmanager-default.cpp] tick()");
 
     //get the reference of the first element of the list
-    XFTimeout* tm = _timeouts.front();
-
-    //decrement it
-    tm->substractFromRelTicks(_tickInterval);
-
-    if(tm->getRelTicks() == 0)
+    if(_timeouts.size() > 0)
     {
-        _timeouts.pop_front(); //remove it from the list
+        XFTimeout* tm = _timeouts.front();
 
-        //push into the event queue
-        returnTimeout(tm);
+        //decrement it
+        tm->substractFromRelTicks(_tickInterval);
+
+        if(tm->getRelTicks() == 0)
+        {
+            _timeouts.pop_front(); //remove it from the list
+
+            //push into the event queue
+            returnTimeout(tm);
+        }
     }
 }
 

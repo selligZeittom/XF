@@ -14,6 +14,10 @@ XFBehavior::XFBehavior(interface::XFDispatcher *pDispatcher)
 {
     Trace::out("[behavior.cpp] XFBehavior()");
     this->_pDispatcher = pDispatcher;
+    if(_pDispatcher == nullptr)
+    {
+        _pDispatcher = XFResourceFactory::getInstance()->getDefaultDispatcher();
+    }
 
 }
 
@@ -32,13 +36,14 @@ XFBehavior::~XFBehavior()
 void XFBehavior::startBehavior()
 {
     Trace::out("[behavior.cpp] startBehavior() : init event pushed");
-    _pDispatcher->pushEvent(new XFInitialEvent());
+    XFInitialEvent* initEvent = new XFInitialEvent();
+    initEvent->setBehavior(this);
+    _pDispatcher->pushEvent(initEvent);
 
 }
 
 void XFBehavior::pushEvent(XFEvent *pEvent)
 {
-    Trace::out("[behavior.cpp] pushEvent()");
     //_pDispatcher->pushEvent(pEvent);
     process(pEvent);
 
@@ -46,7 +51,6 @@ void XFBehavior::pushEvent(XFEvent *pEvent)
 
 const XFEvent *XFBehavior::getCurrentEvent() const
 {
-    Trace::out("[behavior.cpp] getCurrentEvent()");
     return this->_pCurrentEvent;
 }
 
@@ -68,15 +72,12 @@ const XFTimeout *XFBehavior::getCurrentTimeout()
 
 void XFBehavior::setCurrentEvent(const XFEvent *pEvent)
 {
-    Trace::out("[behavior.cpp] setCurrentEvent()");
     this->_pCurrentEvent = pEvent;
 
 }
 
 XFEventStatus XFBehavior::process(const XFEvent *pEvent)
 {
-    Trace::out("[behavior.cpp] process()");
     setCurrentEvent(pEvent); //set the current event first
     processEvent(); //then call the processEvent
-
 }

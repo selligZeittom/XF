@@ -24,9 +24,6 @@ void XF::initialize(int timeInterval, int argc, char *argv[])
         interface::XFTimeoutManager::getInstance()->initialize(timeInterval);
         XFResourceFactory::getInstance()->getDefaultDispatcher()->initialize();
         Trace::out("[xf.cpp] timeout manager, dispatcher and xf initialized ");
-        interface::XFTimeoutManager::getInstance()->start();
-        XFResourceFactory::getInstance()->getDefaultDispatcher()->start();
-        Trace::out("[xf.cpp] timeout manager, dispatcher and xf started ");
 
     }
     _bInitialized = true;
@@ -34,13 +31,9 @@ void XF::initialize(int timeInterval, int argc, char *argv[])
 
 int XF::exec()
 {
-    if(_bInitialized)
-    {
-        Trace::out("[xf.cpp] exec calls initialize, should not happen");
-        initialize(1);
-    }
-
-    //main loop for event dispatching, this is blocking
+    interface::XFTimeoutManager::getInstance()->start();
+    XFResourceFactory::getInstance()->getDefaultDispatcher()->start();
+    Trace::out("[xf.cpp] timeout manager, dispatcher and xf started ");
     _app->exec();
 }
 

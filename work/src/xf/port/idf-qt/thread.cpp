@@ -5,6 +5,7 @@
 #include <assert.h>
 #include <string.h>
 #include "thread.h"
+#include "trace/trace.h"
 
 #if !defined(XFTHREAD_DEFAULT_STACK_SIZE)
     #define XFTHREAD_DEFAULT_STACK_SIZE	256
@@ -17,8 +18,8 @@
 
 void XFThreadPort::start()
 {
-    //let's go
-    start();
+    QThread::start();
+    //run();
 }
 
 void XFThreadPort::suspend()
@@ -43,7 +44,7 @@ XFThreadPriority XFThreadPort::getPriority() const
 
 void XFThreadPort::delay(uint32_t milliseconds)
 {
-    msleep(milliseconds); //wait asks for a time in us
+    msleep(milliseconds);
 }
 
 XFThreadPort::XFThreadPort(interface::XFThreadEntryPointProvider *pProvider, interface::XFThread::EntryMethodBody entryMethod, const char *threadName, const uint32_t stackSize)
@@ -55,7 +56,9 @@ XFThreadPort::XFThreadPort(interface::XFThreadEntryPointProvider *pProvider, int
 
 void XFThreadPort::run()
 {
-    exec();
+    Trace::out("[thread.cpp] run()");
+    (_pEntryMethodProvider->*_entryMethod)(nullptr);
+    Trace::out("[thread.cpp] end of run()");
 }
 
 #endif // USE_XF_PORT_IDF_QT_THREAD_IMPLEMENTATION

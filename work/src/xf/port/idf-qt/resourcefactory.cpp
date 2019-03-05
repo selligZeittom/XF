@@ -24,7 +24,7 @@ interface::XFResourceFactory *XFResourceFactoryPort::getInstance()
     if(!theResourceFactoryPort)
     {
         theResourceFactoryPort = new XFResourceFactoryPort();
-        Trace::out("[resourcecfactory.cpp] created the resourcefactoryport");
+        Trace::out("[resourcecfactory.cpp] new resourcefactoryport created");
     }
     return theResourceFactoryPort;
 }
@@ -43,6 +43,9 @@ interface::XFDispatcher *XFResourceFactoryPort::getDefaultDispatcher()
 interface::XFDispatcher *XFResourceFactoryPort::createDispatcher()
 {
     XFDispatcherActiveDefault* newDispatcher = new XFDispatcherActiveDefault();
+    Trace::out("[resourcecfactory.cpp] new Dispatcher created()");
+    return newDispatcher;
+
 }
 
 interface::XFThread *XFResourceFactoryPort::createThread(interface::XFThreadEntryPointProvider *pProvider, interface::XFThread::EntryMethodBody entryMethod, const char *threadName, const uint32_t stackSize)
