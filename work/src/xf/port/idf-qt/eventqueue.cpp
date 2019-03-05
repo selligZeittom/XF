@@ -26,13 +26,14 @@ bool XFEventQueuePort::empty() const
 
 bool XFEventQueuePort::push(const XFEvent *pEvent)
 {
-    _mutex.lock(); //make sure that only one thread can access to that CS
     _queue.enqueue(pEvent);
-    _mutex.unlock();
+    _newEvents.wakeAll();
+    return true;
 }
 
 const XFEvent *XFEventQueuePort::front()
 {
+    //_mutex.lock(); //make sure that only one thread can access to that CS
     if(!_queue.isEmpty()) //check wether it is empty or not
     {
         return _queue.head(); //return the pointer on the first event
@@ -41,21 +42,24 @@ const XFEvent *XFEventQueuePort::front()
     {
         return NULL; //return NULL if the queue is empty
     }
+    //_mutex.unlock();
 }
 
 void XFEventQueuePort::pop()
 {
-    _mutex.lock(); //make sure that only one thread can access to that CS
+    //_mutex.lock(); //make sure that only one thread can access to that CS
     if(!_queue.isEmpty()) //check wether it is empty or not
     {
         _queue.pop_front(); //remove the next event of the list
     }
-    _mutex.unlock();
+    //_mutex.unlock();
 }
 
 bool XFEventQueuePort::pend()
 {
-    while(_queue.isEmpty()){}; //wait for an event (it is blocking)
+    _mutex.lock();
+    _newEvents.wait(&_mutex);
+    _mutex.unlock();
     return true; //return true once an event came
 }
 

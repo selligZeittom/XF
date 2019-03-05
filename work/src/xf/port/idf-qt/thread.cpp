@@ -56,9 +56,7 @@ XFThreadPort::XFThreadPort(interface::XFThreadEntryPointProvider *pProvider, int
 
 void XFThreadPort::run()
 {
-    Trace::out("[thread.cpp] run()");
     (_pEntryMethodProvider->*_entryMethod)(nullptr);
-    Trace::out("[thread.cpp] end of run()");
 }
 
 #endif // USE_XF_PORT_IDF_QT_THREAD_IMPLEMENTATION

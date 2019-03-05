@@ -12,7 +12,7 @@
 #include "xf/interface/thread.h"
 #include "xf/interface/resourcefactory.h"
 #include "dispatcher-active.h"
-#include "trace/trace.h"
+//#include "trace/trace.h"
 
 
 using interface::XFTimeoutManager;
@@ -91,7 +91,7 @@ void XFDispatcherActiveDefault::unscheduleTimeout(int timeoutId, interface::XFRe
 
 int XFDispatcherActiveDefault::execute(const void * param /* = nullptr */)
 {
-    Trace::out("[dispatcher-active] : execute");
+    //Trace::out("[dispatcher-active] : execute");
     (void)param;
 
     while(_bExecuting)
@@ -113,6 +113,7 @@ int XFDispatcherActiveDefault::executeOnce()
     {
         //get an event and send it to the dispatch method
         dispatchEvent(_events.front());
+        _events.pop(); //remove event from list
     }
     return _bExecuting;
 }

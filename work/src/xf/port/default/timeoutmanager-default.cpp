@@ -85,6 +85,7 @@ void XFTimeoutManagerDefault::tick()
 XFTimeoutManagerDefault::XFTimeoutManagerDefault()
 {
     Trace::out("[timeoutmanager-default.cpp] XFTimeoutManagerDefault()) TBI");
+    _pMutex = XFResourceFactory::getInstance()->createMutex();
 }
 
 void XFTimeoutManagerDefault::addTimeout(XFTimeout *pNewTimeout)
