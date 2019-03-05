@@ -32,16 +32,13 @@ XFBehavior::~XFBehavior()
 void XFBehavior::startBehavior()
 {
     XFInitialEvent* initEvent = new XFInitialEvent();
-    initEvent->setBehavior(this);
-    _pDispatcher->pushEvent(initEvent);
-
+    pushEvent(initEvent);
 }
 
 void XFBehavior::pushEvent(XFEvent *pEvent)
 {
     pEvent->setBehavior(this);
     _pDispatcher->pushEvent(pEvent);
-    //process(pEvent);
 
 }
 
@@ -73,5 +70,10 @@ void XFBehavior::setCurrentEvent(const XFEvent *pEvent)
 XFEventStatus XFBehavior::process(const XFEvent *pEvent)
 {
     setCurrentEvent(pEvent); //set the current event first
-    processEvent(); //then call the processEvent
+    XFEventStatus status = processEvent(); //then call the processEvent
+    if(pEvent->deleteAfterConsume() && status == XFEventStatus::Consumed)
+    {
+        delete pEvent;
+    }
+    return status;
 }

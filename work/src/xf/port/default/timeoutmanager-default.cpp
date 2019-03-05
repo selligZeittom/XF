@@ -42,8 +42,6 @@ void XFTimeoutManagerDefault::start()
 
 void XFTimeoutManagerDefault::scheduleTimeout(int32_t timeoutId, int32_t interval, interface::XFReactive *pReactive)
 {
-    //Trace::out("[timeoutmanager-default.cpp] scheduleTimeout()");
-
     //create the timeout to add to the list
     XFTimeout* tm = new XFTimeout(timeoutId, interval, pReactive);
 
@@ -96,8 +94,9 @@ void XFTimeoutManagerDefault::addTimeout(XFTimeout *pNewTimeout)
     //iterate over the already existing timeouts until the right position is found
     for (; it != _timeouts.end(); ++it)
     {
+        int deltaTime = remainingTicksSum + (*it)->getRelTicks();
         //break if the sum is already bigger than the interval
-        if(pNewTimeout->getInterval() < remainingTicksSum + (*it)->getRelTicks())
+        if(pNewTimeout->getInterval() < deltaTime)
         {
             break;
         }
@@ -106,11 +105,11 @@ void XFTimeoutManagerDefault::addTimeout(XFTimeout *pNewTimeout)
         remainingTicksSum += (*it)->getRelTicks();
     }
 
+    //set the relative ticks for the inserted timeout
+    pNewTimeout->setRelTicks(pNewTimeout->getInterval() - remainingTicksSum);
+
     //insert before that iterator
     _timeouts.insert(it, pNewTimeout);
-
-    //set the relative ticks for the inserted timeout
-    pNewTimeout->setRelTicks(remainingTicksSum);
 
     //iterate over the remainings timeouts and decrement their relative ticks
     for (; it != _timeouts.end(); ++it)
