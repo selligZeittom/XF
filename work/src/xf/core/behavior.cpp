@@ -79,5 +79,5 @@ void XFBehavior::setCurrentEvent(const XFEvent *pEvent)
 XFEventStatus XFBehavior::process(const XFEvent *pEvent)
 {
     setCurrentEvent(pEvent); //set the current event first
-    processEvent(); //then call the processEvent
+    processEvent(); //then call the processEvent§
 }

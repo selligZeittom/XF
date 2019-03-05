@@ -63,6 +63,7 @@ void XFTimeoutManagerDefault::tick()
     //Trace::out("[timeoutmanager-default.cpp] tick()");
 
     //get the reference of the first element of the list
+    _pMutex->lock();
     if(_timeouts.size() > 0)
     {
         XFTimeout* tm = _timeouts.front();
@@ -78,6 +79,7 @@ void XFTimeoutManagerDefault::tick()
             returnTimeout(tm);
         }
     }
+    _pMutex->unlock();
 }
 
 XFTimeoutManagerDefault::XFTimeoutManagerDefault()
@@ -89,6 +91,7 @@ void XFTimeoutManagerDefault::addTimeout(XFTimeout *pNewTimeout)
 {
     Trace::out("[timeoutmanager-default.cpp] addTimeout()");
     //create an iterator at the beginning of the list
+    _pMutex->lock();
     TimeoutList::iterator it = _timeouts.begin();
 
     //store the total of remaining ticks of some timeouts
@@ -119,6 +122,7 @@ void XFTimeoutManagerDefault::addTimeout(XFTimeout *pNewTimeout)
         //substract the added
         (*it)->addToRelTicks(remainingTicksSum);
     }
+    _pMutex->unlock();
 }
 
 void XFTimeoutManagerDefault::removeTimeouts(int32_t timeoutId, interface::XFReactive *pReactive)
@@ -131,6 +135,7 @@ void XFTimeoutManagerDefault::removeTimeouts(int32_t timeoutId, interface::XFRea
     //create a timeout with the parameters just to use the operator ==
     XFTimeout toDeleteTm(timeoutId, 0, pReactive); //interval is not compared with ==
 
+    _pMutex->lock();
     //iterate over the already existing timeouts until the right timeout is found
     for (XFTimeout* tm : _timeouts)
     {
@@ -154,6 +159,7 @@ void XFTimeoutManagerDefault::removeTimeouts(int32_t timeoutId, interface::XFRea
             tm->setRelTicks(tm->getRelTicks() + relTicksTmErased);
         }
     }
+    _pMutex->unlock();
 }
 
 void XFTimeoutManagerDefault::returnTimeout(XFTimeout *pTimeout)
