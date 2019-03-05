@@ -122,7 +122,10 @@ void XFDispatcherActiveDefault::dispatchEvent(const XFEvent * pEvent) const
 {
     //get the target and send it !
     interface::XFReactive* target = pEvent->getBehavior();
-    target->pushEvent(const_cast<XFEvent*>(pEvent));
+    if(target) //only if the target is known
+    {
+        target->process(const_cast<XFEvent*>(pEvent));
+    }
 }
 
 

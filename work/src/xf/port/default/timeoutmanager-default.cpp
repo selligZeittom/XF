@@ -37,13 +37,12 @@ XFTimeoutManagerDefault::~XFTimeoutManagerDefault()
 
 void XFTimeoutManagerDefault::start()
 {
-    Trace::out("[timeoutmanager-default.cpp] start()");
     XF_startTimeoutManagerTimer(_tickInterval);
 }
 
 void XFTimeoutManagerDefault::scheduleTimeout(int32_t timeoutId, int32_t interval, interface::XFReactive *pReactive)
 {
-    Trace::out("[timeoutmanager-default.cpp] scheduleTimeout()");
+    //Trace::out("[timeoutmanager-default.cpp] scheduleTimeout()");
 
     //create the timeout to add to the list
     XFTimeout* tm = new XFTimeout(timeoutId, interval, pReactive);
@@ -53,15 +52,13 @@ void XFTimeoutManagerDefault::scheduleTimeout(int32_t timeoutId, int32_t interva
 
 void XFTimeoutManagerDefault::unscheduleTimeout(int32_t timeoutId, interface::XFReactive *pReactive)
 {
-    Trace::out("[timeoutmanager-default.cpp] unscheduleTimeout()");
+    //Trace::out("[timeoutmanager-default.cpp] unscheduleTimeout()");
 
     removeTimeouts(timeoutId, pReactive); //call the protected method
 }
 
 void XFTimeoutManagerDefault::tick()
 {
-    //Trace::out("[timeoutmanager-default.cpp] tick()");
-
     //get the reference of the first element of the list
     _pMutex->lock();
     if(_timeouts.size() > 0)
@@ -84,13 +81,11 @@ void XFTimeoutManagerDefault::tick()
 
 XFTimeoutManagerDefault::XFTimeoutManagerDefault()
 {
-    Trace::out("[timeoutmanager-default.cpp] XFTimeoutManagerDefault()) TBI");
     _pMutex = XFResourceFactory::getInstance()->createMutex();
 }
 
 void XFTimeoutManagerDefault::addTimeout(XFTimeout *pNewTimeout)
 {
-    Trace::out("[timeoutmanager-default.cpp] addTimeout()");
     //create an iterator at the beginning of the list
     _pMutex->lock();
     TimeoutList::iterator it = _timeouts.begin();
@@ -128,8 +123,6 @@ void XFTimeoutManagerDefault::addTimeout(XFTimeout *pNewTimeout)
 
 void XFTimeoutManagerDefault::removeTimeouts(int32_t timeoutId, interface::XFReactive *pReactive)
 {
-    Trace::out("[timeoutmanager-default.cpp] removeTimeouts()");
-
     int relTicksTmErased = 0;       //number of ticks deleted, must be added to the following timeouts in the list
     bool hasBeenFound = false;      //true once the wanted timeout has been found and deleted from the list
 
@@ -165,7 +158,7 @@ void XFTimeoutManagerDefault::removeTimeouts(int32_t timeoutId, interface::XFRea
 
 void XFTimeoutManagerDefault::returnTimeout(XFTimeout *pTimeout)
 {
-    Trace::out("[timeoutmanager-default.cpp] returnTimeout() TBI");
+    //Trace::out("[timeoutmanager-default.cpp] returnTimeout()");
     pTimeout->getBehavior()->pushEvent(pTimeout);
 }
 

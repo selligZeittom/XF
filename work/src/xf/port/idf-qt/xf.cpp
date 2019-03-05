@@ -31,16 +31,14 @@ void XF::initialize(int timeInterval, int argc, char *argv[])
 
 int XF::exec()
 {
-    interface::XFTimeoutManager::getInstance()->start();
     XFResourceFactory::getInstance()->getDefaultDispatcher()->start();
-    Trace::out("[xf.cpp] timeout manager, dispatcher and xf started ");
+    interface::XFTimeoutManager::getInstance()->start();
     _app->exec();
 }
 
 int XF::execOnce()
 {
     //execute only one time the dispatcher
-    Trace::out("[xf.cpp] execOnce()");
     getDefaultDispatcher()->executeOnce();
 }
 
