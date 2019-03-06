@@ -94,6 +94,8 @@ int XFDispatcherDefault::execute(const void* param)
 		//now we got an event
 		executeOnce();
 	}
+
+	return 0;
 }
 
 void XFDispatcherDefault::dispatchEvent(const XFEvent* pEvent) const
