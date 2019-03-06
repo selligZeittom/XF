@@ -9,7 +9,6 @@
 #ifdef __cplusplus
 
 #include "xf/interface/dispatcher.h"
-#include <QCoreApplication>
 
 
 /** \mainpage PTR Execution Framework Documentation
@@ -108,7 +107,6 @@ public:
      * @param argv Optional parameter to pass application arguments to XF.
      */
     static void initialize(int timeInterval = 10, int argc = 0, char * argv[] = nullptr);
-    static void kill();
 
     /**
      * Starts execution of the framework. This
@@ -129,7 +127,6 @@ public:
 
 protected:
     static bool _bInitialized;			///< Changes from false to true after calling method initialize(int). Used to handle multiple calls to init(int).
-    static QCoreApplication* _app;
 };
 
 #endif  // __cplusplus

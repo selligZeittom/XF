@@ -107,7 +107,6 @@ XFEventStatus XFBehavior::process(const XFEvent *pEvent)
                 delete pEvent;
             }
         }
-        XF::kill();
     }
     return status;
 }

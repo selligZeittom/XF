@@ -15,24 +15,21 @@ using interface::XFTimeoutManager;
 inline void XF::initialize(int timeInterval, int argc, char* argv[]) {
 }
 
-inline void XF::kill() {
+int XF::exec() {
 }
 
-inline int XF::exec() {
+int XF::execOnce() {
 }
 
-inline int XF::execOnce() {
+interface::XFDispatcher* XF::getDefaultDispatcher() {
 }
 
-inline interface::XFDispatcher* XF::getDefaultDispatcher() {
+void XF_initialize(int timeInterval) {
 }
 
-inline void XF_initialize(int timeInterval) {
+void XF_exec() {
 }
 
-inline void XF_exec() {
-}
-
-inline void XF_execOnce() {
+void XF_execOnce() {
 }
 #endif // USE_XF_DEFAULT_IMPLEMENTATION
