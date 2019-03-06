@@ -8,3 +8,18 @@
 // TODO: Implement code for XFMutexDefault class
 
 #endif // USE_XF_MUTEX_DEFAULT_IMPLEMENTATION
+
+XFMutexDefault::XFMutexDefault() {
+}
+
+XFMutexDefault::~XFMutexDefault() {
+}
+
+void XFMutexDefault::lock() {
+}
+
+void XFMutexDefault::unlock() {
+}
+
+bool XFMutexDefault::tryLock(int32_t timeout) {
+}

@@ -147,6 +147,7 @@ void XF_execOnce();                         ///< Calls XF execution in C code (n
 
 #ifdef __cplusplus
 }
+
 #endif // __cplusplus
 
 /** @} */ // end of xf_core group

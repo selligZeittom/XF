@@ -11,6 +11,7 @@ using interface::XFResourceFactory;
 
 XFBehavior::XFBehavior(interface::XFDispatcher *pDispatcher)
 {
+	this->_pCurrentEvent = NULL;
     this->_isActive = false; //default dispatcher is used
     this->_pDispatcher = pDispatcher; //if the constructor provides a dispatcher : use it !
     if(_pDispatcher == nullptr) //but if it is null then create one...
@@ -21,6 +22,7 @@ XFBehavior::XFBehavior(interface::XFDispatcher *pDispatcher)
 
 XFBehavior::XFBehavior(bool ownDispatcher)
 {
+	this->_pCurrentEvent = NULL;
     this->_isActive = ownDispatcher;
     if(_isActive) //create a dispatcher for this instance of behavior
     {

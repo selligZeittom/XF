@@ -14,6 +14,41 @@
 using interface::XFTimeoutManager;
 using interface::XFResourceFactory;
 
+XFDispatcherDefault::XFDispatcherDefault() {
+}
+
+XFDispatcherDefault::~XFDispatcherDefault() {
+}
+
+void XFDispatcherDefault::initialize() {
+}
+
+void XFDispatcherDefault::start() {
+}
+
+void XFDispatcherDefault::stop() {
+}
+
+void XFDispatcherDefault::pushEvent(XFEvent* pEvent) {
+}
+
+void XFDispatcherDefault::scheduleTimeout(int timeoutId, int interval,
+		interface::XFReactive* pReactive) {
+}
+
+void XFDispatcherDefault::unscheduleTimeout(int timeoutId,
+		interface::XFReactive* pReactive) {
+}
+
+int XFDispatcherDefault::executeOnce() {
+}
+
+int XFDispatcherDefault::execute(const void* param) {
+}
+
+void XFDispatcherDefault::dispatchEvent(const XFEvent* pEvent) const {
+}
+
 // TODO: Implement code for XFDispatcherDefault class
 
 #endif // USE_XF_DISPATCHER_DEFAULT_IMPLEMENTATION
