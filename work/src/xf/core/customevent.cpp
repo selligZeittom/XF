@@ -2,6 +2,7 @@
 
 XFCustomEvent::XFCustomEvent(int id, interface::XFReactive *pBehavior) : XFEvent(XFEventType::Event, id, pBehavior)
 {
+	_bDeleteAfterConsume = false;
 }
 
 XFCustomEvent::~XFCustomEvent()

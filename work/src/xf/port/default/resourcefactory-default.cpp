@@ -11,24 +11,41 @@ interface::XFResourceFactory * interface::XFResourceFactory::getInstance()
 	return XFResourceFactoryDefault::getInstance();
 }
 
-interface::XFResourceFactory* XFResourceFactoryDefault::getInstance() {
+interface::XFResourceFactory* XFResourceFactoryDefault::getInstance()
+{
+	static XFResourceFactoryDefault* theRF  = nullptr;
+	if(theRF == nullptr)
+	{
+		theRF = new XFResourceFactoryDefault(); //singleton pattern
+	}
+	return theRF;
 }
 
-interface::XFDispatcher* XFResourceFactoryDefault::getDefaultDispatcher() {
+interface::XFDispatcher* XFResourceFactoryDefault::getDefaultDispatcher()
+{
+	if(_mainDispatcher == nullptr)
+	{
+		_mainDispatcher = createDispatcher(); //create a new only if there isn't already one
+	}
+	return _mainDispatcher;
 }
 
-interface::XFDispatcher* XFResourceFactoryDefault::createDispatcher() {
+interface::XFDispatcher* XFResourceFactoryDefault::createDispatcher()
+{
+	return new XFDispatcherActiveDefault();
 }
 
 interface::XFThread* XFResourceFactoryDefault::createThread(
 		interface::XFThreadEntryPointProvider* pProvider,
 		interface::XFThread::EntryMethodBody entryMethod,
-		const char* threadName, const uint32_t stackSize) {
+		const char* threadName, const uint32_t stackSize)
+{
+	return nullptr; //no thread on the stm32 platform
 }
 
-interface::XFMutex* XFResourceFactoryDefault::createMutex() {
+interface::XFMutex* XFResourceFactoryDefault::createMutex()
+{
+	return new XFMutexDefault();
 }
-
-// TODO: Implement code for XFResourceFactoryDefault class
 
 #endif // USE_XF_RESOURCE_FACTORY_DEFAULT_IMPLEMENTATION
