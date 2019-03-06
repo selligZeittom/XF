@@ -20,4 +20,11 @@ void XF_startTimeoutManagerTimer(uint32_t tickInterval)
 
 // TODO: Implement XF_tick() and XF_tickIntervalInMilliseconds() function
 
+void XF_tick() {
+}
+
+int32_t XF_tickIntervalInMilliseconds() {
+}
+
+
 #endif // USE_XF_PORT_IDF_STM32CUBE_PORT_FUNCTIONS_IMPLEMENTATION

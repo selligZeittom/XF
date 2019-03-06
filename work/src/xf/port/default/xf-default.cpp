@@ -12,27 +12,27 @@ using interface::XFResourceFactory;
 using interface::XFTimeoutManager;
 
 // TODO: Implement code for XF class
-inline void XF::initialize(int timeInterval, int argc, char* argv[]) {
+void XF::initialize(int timeInterval, int argc, char* argv[]) {
 }
 
-inline void XF::kill() {
+void XF::kill() {
 }
 
-inline int XF::exec() {
+int XF::exec() {
 }
 
-inline int XF::execOnce() {
+int XF::execOnce() {
 }
 
-inline interface::XFDispatcher* XF::getDefaultDispatcher() {
+interface::XFDispatcher* XF::getDefaultDispatcher() {
 }
 
-inline void XF_initialize(int timeInterval) {
+void XF_initialize(int timeInterval) {
 }
 
-inline void XF_exec() {
+void XF_exec() {
 }
 
-inline void XF_execOnce() {
+void XF_execOnce() {
 }
 #endif // USE_XF_DEFAULT_IMPLEMENTATION
