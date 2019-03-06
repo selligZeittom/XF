@@ -23,16 +23,12 @@ interface::XFResourceFactory* XFResourceFactoryDefault::getInstance()
 
 interface::XFDispatcher* XFResourceFactoryDefault::getDefaultDispatcher()
 {
-	if(_mainDispatcher == nullptr)
-	{
-		_mainDispatcher = createDispatcher(); //create a new only if there isn't already one
-	}
-	return _mainDispatcher;
+	return &_mainDispatcher;
 }
 
 interface::XFDispatcher* XFResourceFactoryDefault::createDispatcher()
 {
-	return new XFDispatcherActiveDefault();
+	return nullptr;
 }
 
 interface::XFThread* XFResourceFactoryDefault::createThread(
