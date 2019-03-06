@@ -7,18 +7,18 @@
 #include "xf/interface/dispatcher.h"
 #include "xf/xf.h"
 #include "trace/trace.h"
+#include <QCoreApplication>
+
 
 
 using interface::XFResourceFactory;
 bool XF::_bInitialized;
 
-QCoreApplication* XF::_app;
-
+static QCoreApplication* _app = nullptr;
 
 void XF::initialize(int timeInterval, int argc, char *argv[])
 {
-    XF::_app = new QCoreApplication(argc, argv);
-
+    _app = new QCoreApplication(argc, argv);
     if(!_bInitialized) //initialize what should be initialized
     {
         interface::XFTimeoutManager::getInstance()->initialize(timeInterval);
@@ -29,17 +29,18 @@ void XF::initialize(int timeInterval, int argc, char *argv[])
 
 void XF::kill()
 {
+    XFResourceFactory::getInstance()->getDefaultDispatcher()->stop();
+
     if(XFResourceFactory::getInstance()->getDefaultDispatcher() != NULL)
     {
-        XFResourceFactory::getInstance()->getDefaultDispatcher()->stop();
-        //delete XFResourceFactory::getInstance()->getDefaultDispatcher();
+        delete XFResourceFactory::getInstance()->getDefaultDispatcher();
     }
 
     if(XFResourceFactory::getInstance() != NULL)
     {
         delete XFResourceFactory::getInstance();
     }
-    _app->exit();
+    _app->exit(); //let the app return
 }
 
 int XF::exec()

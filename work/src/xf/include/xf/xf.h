@@ -9,7 +9,6 @@
 #ifdef __cplusplus
 
 #include "xf/interface/dispatcher.h"
-#include <QCoreApplication>
 
 
 /** \mainpage PTR Execution Framework Documentation
@@ -129,7 +128,6 @@ public:
 
 protected:
     static bool _bInitialized;			///< Changes from false to true after calling method initialize(int). Used to handle multiple calls to init(int).
-    static QCoreApplication* _app;
 };
 
 #endif  // __cplusplus
