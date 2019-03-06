@@ -28,7 +28,7 @@ void XFThreadPort::suspend()
 
 void XFThreadPort::stop()
 {
-    exit();
+    QThread::quit();
 }
 
 void XFThreadPort::setPriority(XFThreadPriority priority)

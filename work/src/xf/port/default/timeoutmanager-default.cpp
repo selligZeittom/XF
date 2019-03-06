@@ -41,6 +41,15 @@ XFTimeoutManagerDefault::~XFTimeoutManagerDefault()
         delete _pMutex;
         _pMutex = NULL;
     }
+
+    for(auto t : _timeouts)
+    {
+        if(t)
+        {
+            delete t;
+            t = NULL;
+        }
+    }
 }
 
 void XFTimeoutManagerDefault::start()
@@ -74,12 +83,22 @@ void XFTimeoutManagerDefault::tick()
         //decrement it
         tm->substractFromRelTicks(_tickInterval);
 
-        if(tm->getRelTicks() <= 0)
+        while(_timeouts.size() > 0)
         {
-            _timeouts.pop_front(); //remove it from the list
+            //timeout has a relative tick of 0
+            if(tm->getRelTicks() <= 0)
+            {
+                _timeouts.pop_front(); //remove it from the list
 
-            //push into the event queue
-            returnTimeout(tm);
+                //push into the event queue
+                returnTimeout(tm);
+
+                tm = _timeouts.front();
+            }
+            else
+            {
+                break;
+            }
         }
     }
     _pMutex->unlock();
@@ -104,7 +123,7 @@ void XFTimeoutManagerDefault::addTimeout(XFTimeout *pNewTimeout)
     {
         int deltaTime = remainingTicksSum + (*it)->getRelTicks();
         //break if the sum is already bigger than the interval
-        if(pNewTimeout->getInterval() < deltaTime)
+        if(deltaTime >= pNewTimeout->getInterval())
         {
             break;
         }

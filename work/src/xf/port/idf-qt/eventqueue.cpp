@@ -7,8 +7,7 @@
 #include <QMutexLocker>
 #include "eventqueue.h"
 #include "trace/trace.h"
-
-// TODO: Implement code for XFEventQueuePort class
+#include "xf/event.h"
 
 XFEventQueuePort::XFEventQueuePort()
 {
@@ -16,6 +15,14 @@ XFEventQueuePort::XFEventQueuePort()
 
 XFEventQueuePort::~XFEventQueuePort()
 {
+    for(auto e : _queue)
+    {
+        if(e)
+        {
+            delete e;
+            e = NULL;
+        }
+    }
 }
 
 bool XFEventQueuePort::empty() const
@@ -41,12 +48,10 @@ const XFEvent *XFEventQueuePort::front()
 {
     if(!_queue.isEmpty()) //check wether it is empty or not
     {
-        _queue.dequeue();
+        return _queue.dequeue();
     }
-    else
-    {
-        return NULL; //return NULL if the queue is empty
-    }
+
+    return NULL; //return NULL if the queue is empty
 }
 
 void XFEventQueuePort::pop()

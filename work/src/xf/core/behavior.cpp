@@ -22,9 +22,16 @@ XFBehavior::XFBehavior(interface::XFDispatcher *pDispatcher)
 XFBehavior::XFBehavior(bool ownDispatcher)
 {
     this->_isActive = ownDispatcher;
-    if(_pDispatcher == nullptr) //create a dispatcher for this instance of behavior
+    if(_isActive) //create a dispatcher for this instance of behavior
     {
-        _pDispatcher = XFResourceFactory::getInstance()->createDispatcher();
+        if(_pDispatcher == nullptr)
+        {
+            _pDispatcher = XFResourceFactory::getInstance()->createDispatcher();
+        }
+    }
+    else
+    {
+        _pDispatcher = XFResourceFactory::getInstance()->getDefaultDispatcher();
     }
 }
 
@@ -84,7 +91,21 @@ XFEventStatus XFBehavior::process(const XFEvent *pEvent)
     XFEventStatus status = processEvent(); //then call the processEvent which will use the _pCurrentEvent
     if(pEvent->deleteAfterConsume() && status == XFEventStatus::Consumed) //if it should be destroyed then delete it
     {
-        delete pEvent;
+        if(pEvent)
+        {
+            delete pEvent;
+        }
+    }
+    else if(status == XFEventStatus::Terminate) //shut down the state machine
+    {
+        if(pEvent->deleteAfterConsume())
+        {
+            if(pEvent)
+            {
+                delete pEvent;
+            }
+        }
+        XF::kill();
     }
     return status;
 }

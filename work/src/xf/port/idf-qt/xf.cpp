@@ -27,18 +27,34 @@ void XF::initialize(int timeInterval, int argc, char *argv[])
     _bInitialized = true;
 }
 
+void XF::kill()
+{
+    if(XFResourceFactory::getInstance()->getDefaultDispatcher() != NULL)
+    {
+        XFResourceFactory::getInstance()->getDefaultDispatcher()->stop();
+        //delete XFResourceFactory::getInstance()->getDefaultDispatcher();
+    }
+
+    if(XFResourceFactory::getInstance() != NULL)
+    {
+        delete XFResourceFactory::getInstance();
+    }
+    _app->exit();
+}
+
 int XF::exec()
 {
     //start the dispatcher and the timeout manager
     XFResourceFactory::getInstance()->getDefaultDispatcher()->start();
     interface::XFTimeoutManager::getInstance()->start();
-    _app->exec(); //keep the main thread aliiiive
+    return _app->exec(); //keep the main thread aliiiive
 }
 
 int XF::execOnce()
 {
     //execute only one time the dispatcher
     getDefaultDispatcher()->executeOnce();
+    return 1;
 }
 
 interface::XFDispatcher *XF::getDefaultDispatcher()

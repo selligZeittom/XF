@@ -27,6 +27,13 @@ XFDispatcherActiveDefault::XFDispatcherActiveDefault() :
     _pThread = XFResourceFactory::getInstance()->createThread(this,
                                                               (interface::XFThread::EntryMethodBody)&XFDispatcherActiveDefault::execute,
                                                               "dispatcherThread");
+
+    if (!_bInitialized)
+    {
+        _bInitialized = true;
+        _pMutex = XFResourceFactory::getInstance()->createMutex();
+        assert(_pMutex);
+    }
 }
 
 XFDispatcherActiveDefault::~XFDispatcherActiveDefault()
@@ -38,16 +45,16 @@ XFDispatcherActiveDefault::~XFDispatcherActiveDefault()
         delete _pThread;
         _pThread = NULL;
     }
+
+    if(_pMutex)
+    {
+        delete _pMutex;
+        _pMutex = NULL;
+    }
 }
 
 void XFDispatcherActiveDefault::initialize()
 {
-    if (!_bInitialized)
-    {
-        _bInitialized = true;
-        _pMutex = XFResourceFactory::getInstance()->createMutex();
-        assert(_pMutex);
-    }
 }
 
 void XFDispatcherActiveDefault::start()
@@ -61,7 +68,7 @@ void XFDispatcherActiveDefault::start()
 void XFDispatcherActiveDefault::stop()
 {
     _bExecuting = false;
-    _pThread->suspend();
+    _pThread->stop();
 }
 
 void XFDispatcherActiveDefault::pushEvent(XFEvent * pEvent)
