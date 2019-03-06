@@ -85,8 +85,7 @@ void XFTimeoutManagerDefault::tick()
 
         while(_timeouts.size() > 0)
         {
-            //timeout has a relative tick of 0
-            if(tm->getRelTicks() <= 0)
+            if(tm->getRelTicks() <= 0) //timeout has a relative tick of 0
             {
                 _timeouts.pop_front(); //remove it from the list
 
@@ -122,14 +121,15 @@ void XFTimeoutManagerDefault::addTimeout(XFTimeout *pNewTimeout)
     for (; it != _timeouts.end(); ++it)
     {
         int deltaTime = remainingTicksSum + (*it)->getRelTicks();
-        //break if the sum is already bigger than the interval
-        if(deltaTime >= pNewTimeout->getInterval())
+
+        //break if the deltaTime is already bigger than the interval
+        if(deltaTime > pNewTimeout->getInterval())
         {
             break;
         }
 
         //increment the remainingTicksSum
-        remainingTicksSum += (*it)->getRelTicks();
+        remainingTicksSum = deltaTime;
     }
 
     int newRelTicks = pNewTimeout->getInterval() - remainingTicksSum;
@@ -140,12 +140,12 @@ void XFTimeoutManagerDefault::addTimeout(XFTimeout *pNewTimeout)
     //insert before that iterator
     _timeouts.insert(it, pNewTimeout);
 
-    //iterate over the remainings timeouts and decrement their relative ticks
-    for (; it != _timeouts.end(); ++it)
+    //substract the added
+    if(it != _timeouts.end())
     {
-        //substract the added
         (*it)->substractFromRelTicks(newRelTicks);
     }
+
     _pMutex->unlock();
 }
 
@@ -179,6 +179,7 @@ void XFTimeoutManagerDefault::removeTimeouts(int32_t timeoutId, interface::XFRea
         if(hasBeenFound)
         {
             tm->addToRelTicks(relTicksTmErased);
+            break;
         }
     }
     _pMutex->unlock();
