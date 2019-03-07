@@ -43,14 +43,12 @@ void XFDispatcherDefault::initialize()
 
 void XFDispatcherDefault::start()
 {
-	_bExecuting = true;
-	// todo implements start method of dispatcher
+	_bExecuting = true; //only set _bExecuting to true so that the main can call execOnce()
 }
 
 void XFDispatcherDefault::stop()
 {
-	_bExecuting = false;
-	// todo implements stop method of dispatcher
+	_bExecuting = false; //stop the execution as execOnce() checks wether _bExecuting is true or false;
 }
 
 void XFDispatcherDefault::pushEvent(XFEvent* pEvent)
@@ -74,7 +72,7 @@ void XFDispatcherDefault::unscheduleTimeout(int timeoutId,
 
 int XFDispatcherDefault::executeOnce()
 {
-	if(_events.empty() && _bExecuting)
+	if(!_events.empty() && _bExecuting)
 	{
 		dispatchEvent(_events.front()); //get the first event and send it
 		return 0;

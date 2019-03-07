@@ -7,19 +7,28 @@
 
 // TODO: Implement code for XFMutexDefault class
 
+
+XFMutexDefault::XFMutexDefault()
+{
+}
+
+XFMutexDefault::~XFMutexDefault()
+{
+}
+
+void XFMutexDefault::lock()
+{
+	enterCritical();
+}
+
+void XFMutexDefault::unlock()
+{
+	exitCritical();
+}
+
+bool XFMutexDefault::tryLock(int32_t timeout)
+{
+	return false;
+}
+
 #endif // USE_XF_MUTEX_DEFAULT_IMPLEMENTATION
-
-XFMutexDefault::XFMutexDefault() {
-}
-
-XFMutexDefault::~XFMutexDefault() {
-}
-
-void XFMutexDefault::lock() {
-}
-
-void XFMutexDefault::unlock() {
-}
-
-bool XFMutexDefault::tryLock(int32_t timeout) {
-}

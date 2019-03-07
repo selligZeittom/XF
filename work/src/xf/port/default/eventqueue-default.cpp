@@ -6,9 +6,6 @@
 #include "eventqueue-default.h"
 #include "xf/event.h" //Added
 
-// TODO: Implement code for XFEventQueueDefault class
-
-#endif // USE_XF_EVENT_QUEUE_DEFAULT_IMPLEMENTATION
 
 XFEventQueueDefault::XFEventQueueDefault()
 {
@@ -16,15 +13,7 @@ XFEventQueueDefault::XFEventQueueDefault()
 
 XFEventQueueDefault::~XFEventQueueDefault()
 {
-	/*
-	for(auto e : _queue)
-	{
-		if(e)
-		{
-			delete e;
-			e = nullptr;
-		}
-	}*/
+
 }
 
 bool XFEventQueueDefault::empty() const
@@ -62,3 +51,5 @@ bool XFEventQueueDefault::pend()
 	while(_queue.empty()) {}
 	return true;
 }
+
+#endif // USE_XF_EVENT_QUEUE_DEFAULT_IMPLEMENTATION

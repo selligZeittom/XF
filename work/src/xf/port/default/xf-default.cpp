@@ -11,28 +11,58 @@
 using interface::XFResourceFactory;
 using interface::XFTimeoutManager;
 
+bool XF::_bInitialized = false;
+
 // TODO: Implement code for XF class
-void XF::initialize(int timeInterval, int argc, char* argv[]) {
+void XF::initialize(int timeInterval, int argc, char* argv[])
+{
+	if(!_bInitialized)
+	{
+		interface::XFTimeoutManager::getInstance()->initialize(timeInterval);
+		getDefaultDispatcher()->initialize();
+	}
 }
 
-void XF::kill() {
+void XF::kill()
+{
+
 }
 
-int XF::exec() {
+int XF::exec()
+{
+	if(!_bInitialized)
+	{
+		initialize(20);
+	}
+
+	interface::XFTimeoutManager::getInstance()->start();
+	getDefaultDispatcher()->start();
+
+	return 0;
 }
 
-int XF::execOnce() {
+int XF::execOnce()
+{
+	return getDefaultDispatcher()->executeOnce();
 }
 
-interface::XFDispatcher* XF::getDefaultDispatcher() {
+interface::XFDispatcher* XF::getDefaultDispatcher()
+{
+	return XFResourceFactory::getInstance()->getDefaultDispatcher();
 }
 
-void XF_initialize(int timeInterval) {
+void XF_initialize(int timeInterval)
+{
+	XF::initialize(timeInterval);
 }
 
-void XF_exec() {
+void XF_exec()
+{
+	XF::exec();
 }
 
-void XF_execOnce() {
+void XF_execOnce()
+{
+	XF::execOnce();
 }
 #endif // USE_XF_DEFAULT_IMPLEMENTATION
