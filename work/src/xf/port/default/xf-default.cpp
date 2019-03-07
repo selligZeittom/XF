@@ -7,6 +7,7 @@
 #include "xf/interface/resourcefactory.h"
 #include "xf/interface/dispatcher.h"
 #include "xf/xf.h"
+#include "mdw/trace/trace.h"
 
 using interface::XFResourceFactory;
 using interface::XFTimeoutManager;
@@ -16,10 +17,12 @@ bool XF::_bInitialized = false;
 // TODO: Implement code for XF class
 void XF::initialize(int timeInterval, int argc, char* argv[])
 {
+	Trace::out("initializing");
 	if(!_bInitialized)
 	{
 		interface::XFTimeoutManager::getInstance()->initialize(timeInterval);
 		getDefaultDispatcher()->initialize();
+		Trace::out("initialized");
 	}
 }
 
@@ -53,6 +56,7 @@ interface::XFDispatcher* XF::getDefaultDispatcher()
 
 void XF_initialize(int timeInterval)
 {
+	Trace::out("call c++ method initialize");
 	XF::initialize(timeInterval);
 }
 

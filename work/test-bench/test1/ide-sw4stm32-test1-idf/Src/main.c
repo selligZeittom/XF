@@ -38,6 +38,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "stm32f7xx_hal.h"
+#include "mdw/trace/trace.h"
 
 /* USER CODE BEGIN Includes */
 
@@ -140,6 +141,9 @@ int main(void)
   SystemClock_Config();
 
   /* USER CODE BEGIN SysInit */
+  trace_initialize();
+  trace_out("begin");
+
   XF_initialize(20);
   Factory_initialize();
   /* USER CODE END SysInit */
