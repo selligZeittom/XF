@@ -30,7 +30,8 @@ void XF::initialize(int timeInterval, int argc, char* argv[])
 
 void XF::kill()
 {
-
+	Trace::out("[xf-default.cpp] kill()");
+	getDefaultDispatcher()->stop();
 }
 
 int XF::exec()
