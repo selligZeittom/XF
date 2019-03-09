@@ -23,7 +23,7 @@ interface::XFResourceFactory* XFResourceFactoryDefault::getInstance()
 
 interface::XFDispatcher* XFResourceFactoryDefault::getDefaultDispatcher()
 {
-	static XFDispatcherDefault _mainDispatcher;
+	static XFDispatcherDefault _mainDispatcher; //the one and only one dispatcher
 	return &_mainDispatcher;
 }
 

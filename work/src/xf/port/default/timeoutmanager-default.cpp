@@ -187,7 +187,6 @@ void XFTimeoutManagerDefault::removeTimeouts(int32_t timeoutId, interface::XFRea
 
 void XFTimeoutManagerDefault::returnTimeout(XFTimeout *pTimeout)
 {
-    //Trace::out("[timeoutmanager-default.cpp] returnTimeout()");
     pTimeout->getBehavior()->pushEvent(pTimeout);
 }
 

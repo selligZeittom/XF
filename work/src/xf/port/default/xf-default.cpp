@@ -12,18 +12,20 @@
 using interface::XFResourceFactory;
 using interface::XFTimeoutManager;
 
-bool XF::_bInitialized = false;
+bool XF::_bInitialized = false; //must be set to false somewhere, so let's do it there
 
-// TODO: Implement code for XF class
 void XF::initialize(int timeInterval, int argc, char* argv[])
 {
-	Trace::out("initializing");
-	if(!_bInitialized)
+	if(!_bInitialized) //should only be done once
 	{
 		interface::XFTimeoutManager::getInstance()->initialize(timeInterval);
 		getDefaultDispatcher()->initialize();
-		Trace::out("initialized");
+		_bInitialized = true;
 	}
+
+	//start the timeoutmanager and the dispatcher
+	interface::XFTimeoutManager::getInstance()->start();
+	getDefaultDispatcher()->start();
 }
 
 void XF::kill()
@@ -33,19 +35,21 @@ void XF::kill()
 
 int XF::exec()
 {
-	if(!_bInitialized)
+	if(!_bInitialized) //be sure that everything is initialized and started properly
 	{
-		initialize(20);
+		initialize(20); //20 is kind of a default value
 	}
-
-	interface::XFTimeoutManager::getInstance()->start();
-	getDefaultDispatcher()->start();
+	getDefaultDispatcher()->execute();
 
 	return 0;
 }
 
 int XF::execOnce()
 {
+	if(!_bInitialized) //be sure that everything is initialized and started properly
+	{
+		initialize(20); //20 is kind of a default value
+	}
 	return getDefaultDispatcher()->executeOnce();
 }
 
@@ -56,17 +60,16 @@ interface::XFDispatcher* XF::getDefaultDispatcher()
 
 void XF_initialize(int timeInterval)
 {
-	Trace::out("call c++ method initialize");
-	XF::initialize(timeInterval);
+	XF::initialize(timeInterval); //call the c++ method
 }
 
 void XF_exec()
 {
-	XF::exec();
+	XF::exec(); //call the c++ method
 }
 
 void XF_execOnce()
 {
-	XF::execOnce();
+	XF::execOnce(); //call the c++ method
 }
 #endif // USE_XF_DEFAULT_IMPLEMENTATION

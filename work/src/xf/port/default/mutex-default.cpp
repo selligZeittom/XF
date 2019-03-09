@@ -18,12 +18,12 @@ XFMutexDefault::~XFMutexDefault()
 
 void XFMutexDefault::lock()
 {
-	enterCritical();
+	enterCritical(); //kind of a low level mutex : disable the isr
 }
 
 void XFMutexDefault::unlock()
 {
-	exitCritical();
+	exitCritical(); //enable the isr again
 }
 
 bool XFMutexDefault::tryLock(int32_t timeout)

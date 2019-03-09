@@ -18,13 +18,9 @@ XFDispatcherDefault::XFDispatcherDefault()
 {
 	_bExecuting = false;
 	_bInitialized = false;
-	_pMutex = nullptr;
-	if(!_bInitialized)
-	{
-		_pMutex = XFResourceFactory::getInstance()->createMutex();
-		_bInitialized = true;
-		assert(_pMutex);
-	}
+	_pMutex = XFResourceFactory::getInstance()->createMutex();
+	_bInitialized = true;
+	assert(_pMutex);
 }
 
 XFDispatcherDefault::~XFDispatcherDefault()
@@ -48,31 +44,31 @@ void XFDispatcherDefault::start()
 
 void XFDispatcherDefault::stop()
 {
-	_bExecuting = false; //stop the execution as execOnce() checks wether _bExecuting is true or false;
+	_bExecuting = false; //stop the execution as execOnce() checks whether _bExecuting is true or false;
 }
 
 void XFDispatcherDefault::pushEvent(XFEvent* pEvent)
 {
 	_pMutex->lock();
-	_events.push(pEvent);
+	_events.push(pEvent); //forward event to the queue
 	_pMutex->unlock();
 }
 
 void XFDispatcherDefault::scheduleTimeout(int timeoutId, int interval,
 		interface::XFReactive* pReactive)
 {
-	XFTimeoutManager::getInstance()->scheduleTimeout(timeoutId, interval, pReactive);
+	XFTimeoutManager::getInstance()->scheduleTimeout(timeoutId, interval, pReactive); //forward timeout to the timeoutmanager
 }
 
 void XFDispatcherDefault::unscheduleTimeout(int timeoutId,
 		interface::XFReactive* pReactive)
 {
-	XFTimeoutManager::getInstance()->unscheduleTimeout(timeoutId, pReactive);
+	XFTimeoutManager::getInstance()->unscheduleTimeout(timeoutId, pReactive); //forward to the timeoutmanager
 }
 
 int XFDispatcherDefault::executeOnce()
 {
-	if(!_events.empty() && _bExecuting)
+	if(!_events.empty() && _bExecuting) //be sure that the queue isn't empty and that everything is set up properly
 	{
 		dispatchEvent(_events.front()); //get the first event and send it
 		return 0;

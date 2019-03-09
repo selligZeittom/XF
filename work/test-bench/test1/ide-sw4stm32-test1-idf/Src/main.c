@@ -142,7 +142,7 @@ int main(void)
 
   /* USER CODE BEGIN SysInit */
   trace_initialize();
-  trace_out("begin");
+  //trace_out("begin");
 
   XF_initialize(20);
   Factory_initialize();

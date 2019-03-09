@@ -21,7 +21,7 @@ void XF_startTimeoutManagerTimer(uint32_t tickInterval)
 //called from the isr
 void XF_tick()
 {
-	interface::XFTimeoutManager::getInstance()->tick();
+	interface::XFTimeoutManager::getInstance()->tick(); //call the timeoutmanager tick() function
 }
 
 int32_t XF_tickIntervalInMilliseconds()
