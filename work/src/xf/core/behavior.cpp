@@ -91,23 +91,12 @@ XFEventStatus XFBehavior::process(const XFEvent *pEvent)
 {
     setCurrentEvent(pEvent); //set the current event first
     XFEventStatus status = processEvent(); //then call the processEvent which will use the _pCurrentEvent
-    if(pEvent->deleteAfterConsume() && status == XFEventStatus::Consumed) //if it should be destroyed then delete it
+    if(pEvent->deleteAfterConsume() && (status == XFEventStatus::Consumed || status == XFEventStatus::Terminate)) //if it should be destroyed then delete it
     {
         if(pEvent)
         {
             delete pEvent;
         }
     }
-    else if(status == XFEventStatus::Terminate) //shut down the state machine
-    {
-        if(pEvent->deleteAfterConsume())
-        {
-            if(pEvent)
-            {
-                delete pEvent;
-            }
-        }
-        XF::kill();
-    }
-    return status;
+    return status; //so that the dispatcher is aware of which statemachine is finished or not
 }

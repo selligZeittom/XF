@@ -97,7 +97,17 @@ void XFDispatcherDefault::dispatchEvent(const XFEvent* pEvent) const
 	interface::XFReactive* target = pEvent->getBehavior();
 	if(target) //only if the behavior is not null
 	{
-		target->process(pEvent); //to the state machine
+		XFEventStatus status = target->process(pEvent); //to the state machine
+		if(status == XFEventStatus::Terminate) //means that the state machine is finished
+		{
+			/* to be added into the interface XFReactive so we know when to delete a statemachine
+			if(target->dynamicallyCreated())
+			{
+				delete target;
+				target = nullptr;
+			}
+			*/
+		}
 	}
 }
 
