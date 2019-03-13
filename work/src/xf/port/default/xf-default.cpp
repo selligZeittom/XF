@@ -28,12 +28,6 @@ void XF::initialize(int timeInterval, int argc, char* argv[])
 	getDefaultDispatcher()->start();
 }
 
-void XF::kill()
-{
-	Trace::out("[xf-default.cpp] kill()");
-	getDefaultDispatcher()->stop();
-}
-
 int XF::exec()
 {
 	if(!_bInitialized) //be sure that everything is initialized and started properly
