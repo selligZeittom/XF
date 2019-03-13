@@ -32,8 +32,8 @@ bool XFEventQueuePort::empty() const
 
 bool XFEventQueuePort::push(const XFEvent *pEvent)
 {
-    bool emptyBeforeEnqueue = _queue.empty(); //save state before enqueuing
     _mutex.lock();
+    bool emptyBeforeEnqueue = _queue.empty(); //save state before enqueuing
     _queue.enqueue(pEvent);
     _mutex.unlock();
 
@@ -50,7 +50,6 @@ const XFEvent *XFEventQueuePort::front()
     {
         return _queue.dequeue();
     }
-
     return NULL; //return NULL if the queue is empty
 }
 

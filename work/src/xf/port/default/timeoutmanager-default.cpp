@@ -139,32 +139,6 @@ void XFTimeoutManagerDefault::removeTimeouts(int32_t timeoutId,
 	XFTimeout toDeleteTm(timeoutId, 0, pReactive); //interval is not compared with ==
 
 	_pMutex->lock();
-	/*
-	 //iterate over the already existing timeouts until the right timeout is found
-	 for (XFTimeout* tm : _timeouts)
-	 {
-	 if(*tm == toDeleteTm && !hasBeenFound)
-	 {
-	 //first save the relatives ticks that are remaining
-	 relTicksTmErased = tm->getRelTicks();
-
-	 _timeouts.remove(tm); //then remove it from the list
-
-	 if(tm != NULL)
-	 {
-	 delete tm; //delete this timeout ptr
-	 }
-	 continue; //goto next iteration
-	 }
-
-	 //after it has been found, adjust the relTicks
-	 if(hasBeenFound)
-	 {
-	 tm->addToRelTicks(relTicksTmErased);
-	 break;
-	 }
-	 }
-	 */
 
 	//iterate over the already existing timeouts until the right position is found
 	for (TimeoutList::iterator it = _timeouts.begin(); it != _timeouts.end();

@@ -107,7 +107,6 @@ public:
      * @param argv Optional parameter to pass application arguments to XF.
      */
     static void initialize(int timeInterval = 10, int argc = 0, char * argv[] = nullptr);
-    static void kill();
 
     /**
      * Starts execution of the framework. This

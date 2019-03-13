@@ -27,22 +27,6 @@ void XF::initialize(int timeInterval, int argc, char *argv[])
     _bInitialized = true;
 }
 
-void XF::kill()
-{
-    XFResourceFactory::getInstance()->getDefaultDispatcher()->stop();
-
-    if(XFResourceFactory::getInstance()->getDefaultDispatcher() != NULL)
-    {
-        delete XFResourceFactory::getInstance()->getDefaultDispatcher();
-    }
-
-    if(XFResourceFactory::getInstance() != NULL)
-    {
-        delete XFResourceFactory::getInstance();
-    }
-    _app->exit(); //let the app return
-}
-
 int XF::exec()
 {
     //start the dispatcher and the timeout manager
