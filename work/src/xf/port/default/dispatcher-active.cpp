@@ -102,7 +102,6 @@ void XFDispatcherActiveDefault::unscheduleTimeout(int timeoutId, interface::XFRe
 
 int XFDispatcherActiveDefault::execute(const void * param /* = nullptr */)
 {
-    //Trace::out("[dispatcher-active] : execute");
     (void)param;
 
     while(_bExecuting)

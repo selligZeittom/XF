@@ -51,7 +51,7 @@ XFBehavior::~XFBehavior()
 
 void XFBehavior::startBehavior()
 {
-    //create an lauch an init event into the dispatcher
+    //create and lauch an init event into the dispatcher
     XFInitialEvent* initEvent = new XFInitialEvent();
     pushEvent(initEvent);
 }
@@ -91,7 +91,8 @@ XFEventStatus XFBehavior::process(const XFEvent *pEvent)
 {
     setCurrentEvent(pEvent); //set the current event first
     XFEventStatus status = processEvent(); //then call the processEvent which will use the _pCurrentEvent
-    if(pEvent->deleteAfterConsume() && (status == XFEventStatus::Consumed || status == XFEventStatus::Terminate)) //if it should be destroyed then delete it
+     //if it should be destroyed then delete it
+    if(pEvent->deleteAfterConsume() && (status == XFEventStatus::Consumed || status == XFEventStatus::Terminate))
     {
         if(pEvent)
         {

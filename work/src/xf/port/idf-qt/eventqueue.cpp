@@ -27,14 +27,14 @@ XFEventQueuePort::~XFEventQueuePort()
 
 bool XFEventQueuePort::empty() const
 {
-    return _queue.isEmpty(); //return wether the queue is empty or not
+    return _queue.isEmpty(); //return whether the queue is empty or not
 }
 
 bool XFEventQueuePort::push(const XFEvent *pEvent)
 {
     _mutex.lock();
     bool emptyBeforeEnqueue = _queue.empty(); //save state before enqueuing
-    _queue.enqueue(pEvent);
+    _queue.enqueue(pEvent); //add to the queue
     _mutex.unlock();
 
     if(emptyBeforeEnqueue)
@@ -46,7 +46,7 @@ bool XFEventQueuePort::push(const XFEvent *pEvent)
 
 const XFEvent *XFEventQueuePort::front()
 {
-    if(!_queue.isEmpty()) //check wether it is empty or not
+    if(!_queue.isEmpty())
     {
         return _queue.dequeue();
     }
@@ -55,7 +55,7 @@ const XFEvent *XFEventQueuePort::front()
 
 void XFEventQueuePort::pop()
 {
-    if(!_queue.isEmpty()) //check wether it is empty or not
+    if(!_queue.isEmpty())
     {
         _queue.pop_front(); //remove the next event of the list
     }

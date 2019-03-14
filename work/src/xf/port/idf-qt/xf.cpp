@@ -44,7 +44,7 @@ int XF::execOnce()
 
 interface::XFDispatcher *XF::getDefaultDispatcher()
 {
-    //the one and only one dispatcher
+    //the shared by default by the state machine
     return XFResourceFactory::getInstance()->getDefaultDispatcher();
 }
 
